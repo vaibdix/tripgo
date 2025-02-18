@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky && husky install"
+    "prepare": "husky && husky install",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,md,json}\" --config ./.prettierrc"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
@@ -21,8 +22,13 @@
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
     "babel-plugin-react-compiler": "19.0.0-beta-30d8a17-20250209",
+    "lenis": "^1.1.20",
+    "lucide-react": "^0.475.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-loading-skeleton": "^3.5.0",
+    "react-router-dom": "^7.1.5",
+    "swiper": "^11.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
