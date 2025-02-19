@@ -1,7 +1,16 @@
 .swiper-pagination-bullet {
-  background-color: #fff !important;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-  background-color: orange !important;
+  background: #ffffff;
+  transform: scale(1.2);
+}
+
+.swiper-container {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
 }

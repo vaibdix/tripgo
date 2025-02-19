@@ -1,31 +1,21 @@
-import React from 'react';
 import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
-import { SelfImprovement as CampIcon, LocalFireDepartment as FireIcon } from '@mui/icons-material';
+import { SelfImprovement, LocalFireDepartment } from '@mui/icons-material';
+import { BedOutlined, StarBorder, CloudOutlined, Cloud } from '@mui/icons-material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { BedOutlined, StarBorder, CloudOutlined, Cloud } from '@mui/icons-material';
-
 import './CampCard.css';
 
-const images = [
-  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/25/b3/ab/c0/tents-n-trails.jpg?w=1200&h=-1&s=1',
-  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/da/91/bb/tents-n-trails.jpg?w=1200&h=-1&s=1',
-  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/da/91/bb/tents-n-trails.jpg?w=1200&h=-1&s=1',
-  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/da/91/bb/tents-n-trails.jpg?w=1200&h=-1&s=1',
-  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/cd/ed/b7/caption.jpg?w=700&h=-1&s=1',
-];
-
-const CampCard = () => {
+const CampCard = ({ campName, location, price, actualPrice, rating, images }) => {
   return (
     <Card
       sx={{
-        borderRadius: '15px',
+        borderRadius: '10px',
         position: 'relative',
-        maxWidth: 350,
-        border: '0.5px solid gray',
-        backgroundColor: '#eeeeee',
+        maxWidth: 330,
+        backgroundColor: '#fff',
+        border: '1px solid hsl(35, 90.50%, 95.90%)',
         boxShadow: 'none',
       }}
     >
@@ -42,15 +32,14 @@ const CampCard = () => {
         }}
       >
         <IconButton sx={{ backgroundColor: 'white', width: 25, height: 25 }}>
-          <CampIcon sx={{ fontSize: 20 }} />
+          <SelfImprovement sx={{ fontSize: 20 }} />
         </IconButton>
         <IconButton sx={{ backgroundColor: 'white', width: 25, height: 25 }}>
-          <FireIcon sx={{ fontSize: 20 }} />
+          <LocalFireDepartment sx={{ fontSize: 20 }} />
         </IconButton>
       </Box>
 
       <Box sx={{ position: 'relative' }}>
-        {/* Image Slider with Pagination (Dots) */}
         <Swiper
           modules={[Pagination]}
           pagination={{ clickable: true }}
@@ -59,7 +48,7 @@ const CampCard = () => {
           style={{ height: 330 }}
           className="swiper-container"
         >
-          {images.map((img, index) => (
+          {images?.map((img, index) => (
             <SwiperSlide key={index}>
               <img
                 src={img}
@@ -91,7 +80,7 @@ const CampCard = () => {
           }}
         >
           <StarBorder sx={{ color: 'gold', fontSize: 16 }} />
-          <Typography sx={{ fontSize: 14, ml: 0.5 }}>4.5</Typography>
+          <Typography sx={{ fontSize: 14, ml: 0.5 }}>{rating}</Typography>
           <Cloud sx={{ color: 'blue', fontSize: 16, ml: 1 }} />
           <Typography sx={{ fontSize: 14, ml: 0.5 }}>28°C</Typography>
         </Box>
@@ -100,7 +89,7 @@ const CampCard = () => {
       {/* Card Content */}
       <CardContent sx={{ position: 'relative', pt: 2, pb: '16px !important' }}>
         <Typography variant="subtitle2" color="text.secondary">
-          Borivali
+          {location}
         </Typography>
         <Box
           sx={{
@@ -116,7 +105,7 @@ const CampCard = () => {
               fontSize: { xs: '1.25rem', md: '1.1rem' },
             }}
           >
-            Whispering Woods Tents
+            {campName}
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
             <BedOutlined
@@ -143,7 +132,7 @@ const CampCard = () => {
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            ₹ 7383
+            ₹ {price}
           </Typography>
           <Typography
             variant="body2"
@@ -153,12 +142,21 @@ const CampCard = () => {
               color: 'text.secondary',
             }}
           >
-            ₹ 8932
+            ₹ {actualPrice}
           </Typography>
         </Box>
       </CardContent>
     </Card>
   );
+};
+
+CampCard.defaultProps = {
+  images: [],
+  rating: 0,
+  price: 0,
+  actualPrice: 0,
+  campName: '',
+  location: '',
 };
 
 export default CampCard;
