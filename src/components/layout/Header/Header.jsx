@@ -20,7 +20,7 @@ function Header() {
           <Typography
             variant="h6"
             component="div"
-            sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}
+            sx={{ fontWeight: 'semibold', display: 'flex', alignItems: 'center', gap: 1 }}
           >
             <img src={logo} alt="logo" style={{ width: '20px', height: '20px' }} />
             TripGo
@@ -45,121 +45,34 @@ function Header() {
               gap: 4,
             }}
           >
-            <Link
-              to="/"
-              component={Button}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                borderBottom: '2px solid transparent',
-                borderRadius: 0,
-                paddingBottom: '4px',
-                '&:hover': {
-                  borderBottom: '2px solid black',
-                },
-              }}
-            >
-              HOME
-            </Link>
-
-            <Link
-              to="/tours"
-              component={Button}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                borderBottom: '2px solid transparent',
-                borderRadius: 0,
-                paddingBottom: '4px',
-                '&:hover': {
-                  borderBottom: '2px solid black',
-                },
-              }}
-            >
-              TOURS{' '}
-            </Link>
-
-            {/* Apply similar styles to Prices and About Us links */}
-            <Link
-              to="/prices"
-              component={Button}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                borderBottom: '2px solid transparent',
-                borderRadius: 0,
-                paddingBottom: '4px',
-                '&:hover': {
-                  borderBottom: '2px solid black',
-                },
-              }}
-            >
-              COLLECTION{' '}
-            </Link>
-
-            <Link
-              to="/about"
-              component={Button}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                borderBottom: '2px solid transparent',
-                borderRadius: 0,
-                paddingBottom: '4px',
-                '&:hover': {
-                  borderBottom: '2px solid black',
-                },
-              }}
-            >
-              ABOUT US
-            </Link>
-            <Link
-              to="/contact"
-              component={Button}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                borderBottom: '2px solid transparent',
-                borderRadius: 0,
-                paddingBottom: '4px',
-                '&:hover': {
-                  borderBottom: '2px solid black',
-                },
-              }}
-            >
-              CONTACT
-            </Link>
+            <Link to="/">Home</Link>
+            <Link to="/tours">Tours</Link>
+            <Link to="/prices">Collection</Link>
+            <Link to="/about">About Us</Link>
+            <Link to="/contact">Contact</Link>
           </Box>
         </Box>
 
         {/* Actions Section */}
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', ml: 'auto' }}>
-          <IconButton sx={{ border: '1px solid #1a1a1a' }}>
-            <Search size={20} color="#1a1a1a" />
+          <IconButton sx={{ backgroundColor: '#F5F1EE' }}>
+            <Search size={20} color="#875541" style={{}} />
           </IconButton>
-          <IconButton sx={{ border: '1px solid #1a1a1a' }}>
-            <Badge badgeContent={2} color="warning">
-              <Bookmark size={20} color="#1a1a1a" />
+          <IconButton sx={{ backgroundColor: '#EEEFF8' }}>
+            <Badge badgeContent={2} color="warning" sx={{ border: '1px solid #F5F1EE' }}>
+              <Bookmark size={20} color="#101F37" />
             </Badge>
           </IconButton>
           <Button
-            variant="outlined"
             component={Link}
             to="/login"
             sx={{
-              display: { xs: 'none', sm: 'inline-flex' },
               borderRadius: 28,
               px: 3,
               py: 1,
-              border: '1px solid #1a1a1a',
               color: 'black',
-              textTransform: 'none',
+              backgroundColor: '#f9f7f4',
+              fontWeight: 'semibold',
             }}
           >
             Login
