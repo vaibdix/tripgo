@@ -22,7 +22,7 @@ const LoadingSkeleton = () => (
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Axiforma', 'Noto Sans'].join(','),
+    fontFamily: ['Avenir', 'Neue Haas Grotesk Display Pro', 'Axiforma', 'Noto Sans'].join(','),
   },
 });
 
