@@ -3,7 +3,7 @@ import herooimg from '../../../../assets/images/herooimg.jpg';
 
 export default function Hero() {
   return (
-    <Box sx={{ width: '100vw', position: 'relative', overflow: 'hidden' }}>
+    <Box sx={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
       <Grid container justifyContent="center">
         <Grid item xs={12} sx={{ position: 'relative' }}>
           <Card sx={{ boxShadow: 'none' }}>
@@ -25,8 +25,9 @@ export default function Hero() {
                 justifyContent: 'center',
               }}
             >
-              <Typography variant="h2" fontWeight="bold" color="black">
-                Gear up for Great Outdoors®
+              <Typography variant="h3" fontWeight="normal" color="black">
+                {/* Gear up for Great Outdoors® */}
+                GEAR UP FOR GREAT OUTDOORS®
               </Typography>
             </Box>
           </Card>

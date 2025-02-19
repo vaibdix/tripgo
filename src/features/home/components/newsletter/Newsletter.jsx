@@ -9,6 +9,7 @@ export default function Footer() {
       sx={{
         background: 'linear-gradient(to bottom, #f8f8f8, #8E8E8E)',
         p: 4,
+        mt: { md: 4 },
         display: 'grid',
         gridTemplateColumns: {
           xs: '1fr',
