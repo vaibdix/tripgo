@@ -13,7 +13,7 @@ import {
   Collapse,
 } from '@mui/material';
 import { FilterList } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import useTentStore from '../../store/tentStore';
 import CampCard from '../home/components/campcard/CampCard';
 import useAccommodationStore from '../../store/accommodationStore';
@@ -21,12 +21,14 @@ import AccommodationFilters from './components/AccommodationFilters';
 import { useTheme, useMediaQuery } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import catebg from '../../assets/images/catebg.png';
+import CampCardSkeleton from '../home/components/campcard/CampCardSkeleton';
 
 const Tours = () => {
   const [tentType, setTentType] = useState('tents');
   const [showFilters, setShowFilters] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isPending, startTransition] = useTransition();
 
   const { accommodations, fetchAccommodations, isLoading, currentPage, totalPages, changePage } =
     useAccommodationStore();
@@ -37,18 +39,72 @@ const Tours = () => {
 
   const handleTypeChange = (e, value) => {
     if (value !== null) {
-      setTentType(value);
-      // Reset filters when changing accommodation type
-      setFilters({
-        priceRange: '',
-        capacity: '',
-        amenities: [],
-        sortBy: '',
-        additionalFilters: [],
-        rating: '',
+      // Start transition for state updates
+      startTransition(() => {
+        setTentType(value);
+        setFilters({
+          priceRange: '',
+          capacity: '',
+          amenities: [],
+          sortBy: '',
+          additionalFilters: [],
+          rating: '',
+        });
       });
     }
   };
+
+  // Update the ToggleButtonGroup to show loading state
+  <ToggleButtonGroup
+    value={tentType}
+    exclusive
+    onChange={handleTypeChange}
+    sx={{
+      gap: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+      opacity: isPending ? 0.7 : 1,
+      '& .MuiToggleButton-root': {
+        border: '1px solid #e0e0e0',
+        borderRadius: '24px',
+        px: 3,
+        py: 0.8,
+        minWidth: '100px',
+        textTransform: 'none',
+        fontSize: '0.95rem',
+        fontWeight: 500,
+        color: '#666',
+        transition: 'all 0.2s ease-in-out',
+        '&:hover': {
+          backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          transform: 'translateY(-2px)',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
+        },
+        '&.Mui-selected': {
+          backgroundColor: 'black',
+          color: 'white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          },
+        },
+      },
+    }}
+  >
+    {[
+      { value: 'tents', label: 'Tents' },
+      { value: 'cottages', label: 'Cottages' },
+      { value: 'farmhouses', label: 'Farmhouses' },
+      { value: 'hotels', label: 'Hotels' },
+      { value: 'homestays', label: 'Homestays' },
+      { value: 'treehouses', label: 'Treehouses' },
+      { value: 'villas', label: 'Villas' },
+    ].map(({ value, label }) => (
+      <ToggleButton key={value} value={value}>
+        {label}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>;
 
   const [filters, setFilters] = useState({
     priceRange: '',
@@ -217,93 +273,99 @@ const Tours = () => {
                 </Select>
               </FormControl>
             ) : (
-              <ToggleButtonGroup
-                value={tentType}
-                exclusive
-                onChange={handleTypeChange}
-                sx={{
-                  gap: 1,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  '& .MuiToggleButton-root': {
-                    border: '1px solid #e0e0e0',
-                    borderRadius: '24px',
-                    px: 3,
-                    py: 0.8,
-                    minWidth: '100px',
-                    textTransform: 'none',
-                    fontSize: '0.95rem',
-                    fontWeight: 500,
-                    color: '#666',
-                    transition: 'all 0.2s ease-in-out',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
-                    },
-                    '&.Mui-selected': {
-                      backgroundColor: 'black',
-                      color: 'white',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              <Box sx={{ position: 'relative' }}>
+                <ToggleButtonGroup
+                  value={tentType}
+                  exclusive
+                  onChange={handleTypeChange}
+                  sx={{
+                    gap: 1,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    opacity: isPending ? 0.7 : 1,
+                    pointerEvents: isPending ? 'none' : 'auto',
+                    '& .MuiToggleButton-root': {
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '24px',
+                      px: 3,
+                      py: 0.8,
+                      minWidth: '100px',
+                      textTransform: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: 500,
+                      color: '#666',
+                      transition: 'all 0.2s ease-in-out',
                       '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: 'black',
+                        color: 'white',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        },
                       },
                     },
-                  },
-                }}
-              >
-                {[
-                  { value: 'tents', label: 'Tents' },
-                  { value: 'cottages', label: 'Cottages' },
-                  { value: 'farmhouses', label: 'Farmhouses' },
-                  { value: 'hotels', label: 'Hotels' },
-                  { value: 'homestays', label: 'Homestays' },
-                  { value: 'treehouses', label: 'Treehouses' },
-                  { value: 'villas', label: 'Villas' },
-                ].map(({ value, label }) => (
-                  <ToggleButton key={value} value={value}>
-                    {label}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
+                  }}
+                >
+                  {[
+                    { value: 'tents', label: 'Tents' },
+                    { value: 'cottages', label: 'Cottages' },
+                    { value: 'farmhouses', label: 'Farmhouses' },
+                    { value: 'hotels', label: 'Hotels' },
+                    { value: 'homestays', label: 'Homestays' },
+                    { value: 'treehouses', label: 'Treehouses' },
+                    { value: 'villas', label: 'Villas' },
+                  ].map(({ value, label }) => (
+                    <ToggleButton key={value} value={value}>
+                      {label}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+                {isPending && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
             )}
 
             {/* Sort By Button */}
             <FormControl sx={{ minWidth: 120, marginLeft: 'auto' }}>
-              <RadioGroup
-                value={filters.sortBy}
+              <Select
+                value={filters.sortBy || ''}
                 onChange={handleSortChange}
+                displayEmpty
                 sx={{
-                  '& .MuiFormControlLabel-root': {
-                    margin: 0,
+                  borderRadius: '24px',
+                  height: '40px',
+                  border: '1px solid #e0e0e0',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
                   },
                 }}
               >
-                <Select
-                  value={filters.sortBy}
-                  onChange={handleSortChange}
-                  displayEmpty
-                  sx={{
-                    borderRadius: '24px',
-                    height: '40px',
-                    border: '1px solid #e0e0e0',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
-                    },
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      border: 'none',
-                    },
-                  }}
-                >
-                  <MenuItem value="">Sort By</MenuItem>
-                  <MenuItem value="price_asc">Price: Low to High</MenuItem>
-                  <MenuItem value="price_desc">Price: High to Low</MenuItem>
-                  <MenuItem value="rating_desc">Highest Rated</MenuItem>
-                  <MenuItem value="popular">Most Popular</MenuItem>
-                </Select>
-              </RadioGroup>
+                <MenuItem value="">Sort By</MenuItem>
+                <MenuItem value="price_asc">Price: Low to High</MenuItem>
+                <MenuItem value="price_desc">Price: High to Low</MenuItem>
+                <MenuItem value="rating_desc">Highest Rated</MenuItem>
+                <MenuItem value="popular">Most Popular</MenuItem>
+              </Select>
             </FormControl>
           </Box>
 
@@ -331,13 +393,21 @@ const Tours = () => {
       <Box sx={{ pl: '2rem', pr: '2rem' }}>
         <Box sx={{ mb: 4 }}>
           {isLoading ? (
-            <Typography>Loading...</Typography>
+            <Grid container spacing={3}>
+              {[...Array(8)].map((_, index) => (
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                  <CampCardSkeleton />
+                </Grid>
+              ))}
+            </Grid>
           ) : accommodations && accommodations.length > 0 ? (
             <>
               <Grid container spacing={3}>
                 {accommodations.map((item) => (
-                  <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
+                  <Grid item key={item._id || item.id} xs={12} sm={6} md={4} lg={3}>
                     <CampCard
+                      id={item._id || item.id}
+                      type={tentType}
                       campName={item.campName}
                       location={item.address.tal}
                       price={item.prices.afterDiscount}
@@ -348,7 +418,6 @@ const Tours = () => {
                   </Grid>
                 ))}
               </Grid>
-
               {/* Pagination */}
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
                 <Pagination
