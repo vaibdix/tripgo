@@ -1,0 +1,179 @@
+{
+  "campName": "Misty Ridge Cottage",
+  "type": "Deluxe Villa",
+  "suitableFor": "Fits 2 Adults",
+  "freeServices": ["Free Parking"],
+  "refundPolicy": "Partially Refundable",
+  "prices": {
+    "actual": 19280,
+    "afterDiscount": 15113
+  },
+  "roomsInACamp": [
+    {
+      "type": "1 Bedroom",
+      "beds": "1 Double Bed",
+      "capacity": "sleeps 2 guests"
+    }
+  ],
+  "about": {
+    "info": "Misty Ridge Cottage offers a luxurious retreat amidst natural surroundings, perfect for relaxation and enjoying the scenic beauty of Pune.",
+    "images": [
+      "https://www.hireacamp.com/api/external/image?name=uploads/1e133e0fef5e4ce6b33d4e16a1a0ec0e.jpeg&size=2048x2048&q=75",
+      "https://www.hireacamp.com/api/external/image?name=uploads/9605e7251d394bb7b414bef48dcea97f.jpeg&size=2048x2048&q=75",
+      "https://www.hireacamp.com/api/external/image?name=uploads/73c95e4384174da2ac17706ac906514a.jpeg&size=2048x2048&q=75",
+      "https://www.hireacamp.com/api/external/image?name=uploads/6bf0e0c32b3f4224b4835f08be618a76.jpeg&size=2048x2048&q=75",
+      "https://www.hireacamp.com/api/external/image?name=uploads/6a339b50d0b04aeebee84e85439bc01e.jpeg&size=2048x2048&q=75"
+    ]
+  },
+  "address": {
+    "lanndmark": "Landmark near Misty Ridge Cottage",
+    "village": "Pawna Nagar",
+    "tal": "Maval",
+    "dist": "Pune",
+    "location": "https://maps.app.goo.gl/Spot100Location",
+    "map": "\u003Ciframe src='https://www.google.com/maps/embed?pb=...' width='600' height='450' style='border:0;'\u003E\u003C/iframe\u003E"
+  },
+  "amenities": ["Bonfire", "Garden", "Restaurant", "Swimming Pool", "Caretaker"],
+  "propertyLayout": {
+    "roomOptions": [
+      {
+        "img": "https://www.hireacamp.com/api/external/image?name=uploads/c998068e25314913b24d21cdce8f45d0.jpeg&size=2048x2048&q=75",
+        "qty": 3,
+        "name": "Honeymoon Suite",
+        "beds": "1 Double Bed",
+        "extra": "Mountain View"
+      }
+    ],
+    "sharedOptions": [
+      {
+        "img": "https://www.hireacamp.com/api/external/image?name=uploads/055e2ebecd044ef4b335f1149d249632.jpeg&size=2048x2048&q=75",
+        "qty": 1,
+        "name": "Shared Lounge",
+        "beds": "",
+        "extra": []
+      }
+    ]
+  },
+  "foodDining": [
+    {
+      "isMealProvided": true,
+      "mealsOffered": ["Dinner", "Breakfast"],
+      "veg": true,
+      "non-veg": true,
+      "isOutsideFoodAllowed": "true"
+    }
+  ],
+  "date": "",
+  "ratings": {
+    "location": 4.1,
+    "cleanliness": 4,
+    "valueForMoney": 3.2,
+    "food": 3.9,
+    "facilities": 4.4,
+    "checkInExperience": 4.4
+  },
+  "reviews": [
+    {
+      "custName": "Neha Pawar",
+      "date": "Nov 17, 2024",
+      "categoryUsed": "Luxury Apartment",
+      "review": "The staff was very courteous and helpful.",
+      "rating": "3.8",
+      "imgs": [
+        "https://www.hireacamp.com/api/external/image?name=uploads/29328d51e21d4072a1fd04eee4df3dcd.jpeg&size=3840x3840&q=75"
+      ]
+    },
+    {
+      "custName": "Sanjana Bhise",
+      "date": "Oct 22, 2024",
+      "categoryUsed": "Luxury Apartment",
+      "review": "A memorable stay with outstanding service.",
+      "rating": "3.8",
+      "imgs": [
+        "https://www.hireacamp.com/api/external/image?name=uploads/29328d51e21d4072a1fd04eee4df3dcd.jpeg&size=3840x3840&q=75"
+      ]
+    },
+    {
+      "custName": "Aditi Kulkarni",
+      "date": "Sep 03, 2024",
+      "categoryUsed": "Luxury Apartment",
+      "review": "Excellent service and comfortable stay.",
+      "rating": "3.9",
+      "imgs": [
+        "https://www.hireacamp.com/api/external/image?name=uploads/f8882f75bc374ef5849a9e7790ff4e57.jpeg&size=1920x1920&q=75"
+      ]
+    },
+    {
+      "custName": "Sneha Jadhav",
+      "date": "Oct 05, 2024",
+      "categoryUsed": "Luxury Apartment",
+      "review": "Loved the amenities and the cleanliness of the property.",
+      "rating": "4.7",
+      "imgs": [
+        "https://www.hireacamp.com/api/external/image?name=uploads/29328d51e21d4072a1fd04eee4df3dcd.jpeg&size=3840x3840&q=75"
+      ]
+    },
+    {
+      "custName": "Aditi Kulkarni",
+      "date": "Jan 01, 2025",
+      "categoryUsed": "Luxury Apartment",
+      "review": "A wonderful place to unwind with friends and family.",
+      "rating": "4.0",
+      "imgs": [
+        "https://www.hireacamp.com/api/external/image?name=uploads/b16c8465f0e04fa5b5827aba8a1647a2.jpeg&size=1920x1920&q=75"
+      ]
+    }
+  ],
+  "id": "1",
+  "cancellationPolicy": "Non-refundable after booking.",
+  "specialPackages": [
+    {
+      "name": "Romantic Getaway",
+      "price": 2500
+    }
+  ],
+  "activitiesDetails": [
+    {
+      "name": "Nature Walk",
+      "difficulty": "Easy",
+      "duration": "1 hour",
+      "price": 300
+    }
+  ],
+  "dynamicPricing": {
+    "weekday": {
+      "actual": 10000,
+      "discounted": 8000
+    },
+    "weekend": {
+      "actual": 12000,
+      "discounted": 9600
+    },
+    "peakSeason": {
+      "actual": 15000,
+      "discounted": 12000
+    }
+  },
+  "localAttractions": [
+    {
+      "name": "Scenic Lake View",
+      "distance": "2 km",
+      "description": "A breathtaking view of the Pawna Lake."
+    }
+  ],
+  "weather": {
+    "currentTemp": "24°C",
+    "forecast": ["Sunny", "Partly Cloudy", "Rain"]
+  },
+  "transportation": {
+    "nearestAirport": "50 km",
+    "nearestRailwayStation": "25 km",
+    "shuttleService": true
+  },
+  "healthAndSafety": {
+    "emergencyContact": "+91-9876543210",
+    "firstAidAvailable": true,
+    "covidPrecautions": "Sanitized regularly, mask mandatory in common areas."
+  },
+  "uniqueFeatures": ["Scenic views", "Luxury accommodations", "Bonfire experience"]
+}
