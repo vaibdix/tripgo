@@ -10,18 +10,13 @@ const SpecialPackages = ({ packages }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', }}>
+    <Box sx={{ width: '100%' }}>
       <Typography variant="h6" gutterBottom>
         Special Packages
       </Typography>
       <Grid container spacing={2}>
         {packages.map((pkg, index) => (
-          <Grid 
-            item 
-            xs={12} 
-            sm={getGridColumns(packages.length)} 
-            key={index}
-          >
+          <Grid item xs={12} sm={getGridColumns(packages.length)} key={index}>
             <Paper
               elevation={0}
               sx={{
@@ -29,14 +24,10 @@ const SpecialPackages = ({ packages }) => {
                 height: '100%',
                 border: '1px solid #e0e0e0',
                 borderRadius: '8px',
-                
               }}
             >
               <Typography variant="subtitle1">{pkg.name}</Typography>
-              <Typography variant="p" >
-                ₹{pkg.price}
-              </Typography>
-              
+              <Typography variant="p">₹{pkg.price}</Typography>
             </Paper>
           </Grid>
         ))}

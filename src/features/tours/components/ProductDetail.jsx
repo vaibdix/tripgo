@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Box,
@@ -12,10 +13,30 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import { useState, useEffect } from 'react';
-import useAccommodationStore from '../../../store/accommodationStore';
+import {
+  SportsEsports,
+  Person,
+  Pool,
+  LocalFireDepartment,
+  OutdoorGrill,
+  Park,
+} from '@mui/icons-material';
+import {
+  Footprints,
+  SquareActivity,
+  MapIcon,
+  Wifi,
+  Wine,
+  Soup,
+  Hotel,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ParkingCircle,
+  Landmark,
+  Mountain,
+} from 'lucide-react';
+
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
@@ -24,27 +45,11 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import AttractionsIcon from '@mui/icons-material/Attractions';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import KingBedIcon from '@mui/icons-material/KingBed';
-import { ChevronLeftIcon } from 'lucide-react';
-import { ChevronRightIcon } from 'lucide-react';
 
-// Add this import at the top with other imports
+import useAccommodationStore from '../../../store/accommodationStore';
+import RandomDestinations from './RandomDestinations';
 import DiningOptions from './DiningOptions';
 import SpecialPackages from './SpecialPackages';
-import { Hotel } from 'lucide-react';
-import { SportsEsports } from '@mui/icons-material';
-import { Person } from '@mui/icons-material';
-import { Pool } from '@mui/icons-material';
-import { LocalFireDepartment } from '@mui/icons-material';
-import { OutdoorGrill } from '@mui/icons-material';
-import { Park } from '@mui/icons-material';
-import { Footprints } from 'lucide-react';
-import { SquareActivity } from 'lucide-react';
-import { MapIcon } from 'lucide-react';
-import { Landmark, Mountain } from 'lucide-react';
-import { Wifi } from 'lucide-react';
-import { Wine } from 'lucide-react';
-import { Soup } from 'lucide-react';
-import RandomDestinations from './RandomDestinations';
 
 const amenities = {
   Restaurant: <Hotel />,
@@ -62,7 +67,7 @@ const freeServices = {
   'Free WiFi': <Wifi />,
   'Complimentary Drinks': <Wine />,
   'Free Breakfast': <Soup />,
-  'Free Parking': <Park />,
+  'Free Parking': <ParkingCircle />,
 };
 
 const ProductDetail = () => {
@@ -138,7 +143,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       <Grid
         container
         spacing={2}
@@ -226,14 +231,14 @@ const ProductDetail = () => {
         </Grid>
         {/* Basic Product Details */}
         <Grid item sx={{ gridArea: 'basicproductdetails' }}>
-          <Paper elevation={0} sx={{ p: 3 }}>
+          <Paper elevation={0} sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography variant="h5" sx={{ mb: 1 }}>
                 {product.campName}
               </Typography>
 
               {/* Ratings */}
-              <Box sx={{ alignItems: 'self-end', gap: 3, marginLeft: 'auto' }}>
+              <Box sx={{ alignItems: 'self-end', gap: 2, marginLeft: 'auto' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Rating
                     value={
@@ -286,7 +291,7 @@ const ProductDetail = () => {
 
             {/* Free Services */}
             <Box sx={{ mb: 2, display: 'flex' }}>
-              <Typography variant="p" sx={{ mt: 1, mr: 1, fontWeight: 600 }}>
+              <Typography variant="p" sx={{ mr: 1, fontWeight: 600 }}>
                 Free Services
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
@@ -296,9 +301,10 @@ const ProductDetail = () => {
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        p: 1,
+                        p: 0.4,
+                        mt: -0.3,
+                        ml: 1,
                         cursor: 'pointer',
-
                         borderRadius: '25px',
                         backgroundColor: 'rgba(0, 0, 0, 0.04)',
                         '&:hover': {
@@ -314,22 +320,21 @@ const ProductDetail = () => {
             </Box>
 
             {/* Description */}
-            <Typography sx={{ mb: 3 }}>{product.about.info}</Typography>
+            <Typography sx={{ mb: 2 }}>{product.about.info}</Typography>
 
             {/* Location */}
-            <Box sx={{ mb: 2, display: 'flex' }}>
+            <Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
               <Typography
-                variant="p"
+                component="div" // Change component to div instead of p
                 sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600 }}
               >
                 Address
               </Typography>
-              <Typography>
-                {/* {product.address.village}, {product.address.tal},  */}
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, ml: 2 }}>
+              <Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   <Chip icon={<LocationOnIcon />} label={product.address.dist} />
                 </Box>
-              </Typography>
+              </Box>
             </Box>
 
             {/* activities */}
@@ -405,6 +410,7 @@ const ProductDetail = () => {
               sx={{
                 backgroundColor: 'black',
                 py: 1.5,
+
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.8)' },
               }}
             >
@@ -414,7 +420,7 @@ const ProductDetail = () => {
         </Grid>
 
         {/* Tabs Section */}
-        <Grid item sx={{ gridArea: 'tabs' }}>
+        <Grid item sx={{ gridArea: 'tabs', marginTop: 3 }}>
           <Box sx={{ position: 'relative', width: '100%' }}>
             <IconButton
               sx={{

@@ -10,7 +10,7 @@ const DiningOptions = ({ foodDining }) => {
           mb: 4,
           fontWeight: 500,
           borderBottom: '1px solid #e0e0e0',
-          pb: 2
+          pb: 2,
         }}
       >
         Dining Options
@@ -24,7 +24,7 @@ const DiningOptions = ({ foodDining }) => {
               p: 3,
               border: '1px solid #e0e0e0',
               borderRadius: '12px',
-              height: '100%'
+              height: '100%',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
@@ -35,7 +35,7 @@ const DiningOptions = ({ foodDining }) => {
                   p: 1,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
                 <RestaurantIcon sx={{ color: 'white', fontSize: '2rem' }} />
@@ -59,7 +59,7 @@ const DiningOptions = ({ foodDining }) => {
               p: 3,
               border: '1px solid #e0e0e0',
               borderRadius: '12px',
-              height: '100%'
+              height: '100%',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
@@ -70,7 +70,7 @@ const DiningOptions = ({ foodDining }) => {
                   p: 1,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
                 <RestaurantIcon sx={{ color: 'white', fontSize: '2rem' }} />
@@ -94,7 +94,7 @@ const DiningOptions = ({ foodDining }) => {
               p: 3,
               border: '1px solid #e0e0e0',
               borderRadius: '12px',
-              height: '100%'
+              height: '100%',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
@@ -105,7 +105,7 @@ const DiningOptions = ({ foodDining }) => {
                   p: 1,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
                 <RestaurantIcon sx={{ color: 'white', fontSize: '2rem' }} />

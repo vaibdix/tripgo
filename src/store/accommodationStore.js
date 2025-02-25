@@ -101,7 +101,7 @@ const useAccommodationStore = create(
 
           fetchAccommodations: async (type, page = 1, filters = null) => {
             set({ isLoading: true, currentType: type, currentPage: page });
-        
+
             try {
               let response;
               switch (type) {
@@ -129,70 +129,82 @@ const useAccommodationStore = create(
                 default:
                   response = await api.fetchtents();
               }
-        
+
               let allData = response.data;
-        
+
               if (filters) {
                 allData = applyFilters(allData, filters);
               }
-        
-              const paginatedData = allData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-        
-              set((state) => ({
-                accommodations: paginatedData,
-                totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
-                isLoading: false,
-              }), false, 'fetchAccommodations'); // Add action name
-        
+
+              const paginatedData = allData.slice(
+                (page - 1) * ITEMS_PER_PAGE,
+                page * ITEMS_PER_PAGE
+              );
+
+              set(
+                (state) => ({
+                  accommodations: paginatedData,
+                  totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
+                  isLoading: false,
+                }),
+                false,
+                'fetchAccommodations'
+              ); // Add action name
+
               return allData;
             } catch (error) {
-              set((state) => ({
-                error: error.message,
-                isLoading: false
-              }), false, 'fetchAccommodationsError'); // Add action name
+              set(
+                (state) => ({
+                  error: error.message,
+                  isLoading: false,
+                }),
+                false,
+                'fetchAccommodationsError'
+              ); // Add action name
               console.error(`Error fetching ${type}:`, error);
               return [];
             }
           },
 
-      changePage: async (page) => {
-        const { currentType } = get();
-        await get().fetchAccommodations(currentType, page);
-      },
+          changePage: async (page) => {
+            const { currentType } = get();
+            await get().fetchAccommodations(currentType, page);
+          },
 
-      getAccommodationById: async (id, type) => {
-        try {
-          console.log('Current type:', type);
-          console.log('Searching for ID:', id);
-          
-          // First try to find in the specified type
-          const response = await api[`fetch${type}`]();
-          const allData = response.data;
-          
-          // Check for both _id and id
-          const found = allData.find(item => 
-            (item._id && item._id.toString() === id.toString()) || 
-            (item.id && item.id.toString() === id.toString())
-          );
-          
-          if (found) {
-            console.log('Found in specified type:', type, found);
-            return found;
-          }
-          
-          console.log('Product not found in specified type, stopping search');
-          return null;
-        } catch (error) {
-          console.error(`Error fetching accommodation by id:`, error);
-          return null;
+          getAccommodationById: async (id, type) => {
+            try {
+              console.log('Current type:', type);
+              console.log('Searching for ID:', id);
+
+              // First try to find in the specified type
+              const response = await api[`fetch${type}`]();
+              const allData = response.data;
+
+              // Check for both _id and id
+              const found = allData.find(
+                (item) =>
+                  (item._id && item._id.toString() === id.toString()) ||
+                  (item.id && item.id.toString() === id.toString())
+              );
+
+              if (found) {
+                console.log('Found in specified type:', type, found);
+                return found;
+              }
+
+              console.log('Product not found in specified type, stopping search');
+              return null;
+            } catch (error) {
+              console.error(`Error fetching accommodation by id:`, error);
+              return null;
+            }
+          },
+        }),
+        {
+          name: 'Accommodation Store',
+          enabled: true,
         }
-      },
-    }),
-    {
-      name: 'Accommodation Store',
-      enabled: true,
-    }
-  )
+      )
     : (set, get) => ({
         // Your store configuration without devtools
         // ... same as above without the devtools specific parts
