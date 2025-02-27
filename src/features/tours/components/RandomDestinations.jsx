@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Container, Grid } from '@mui/material';
-import CampCard from '../campcard/CampCard';
-import useAccommodationStore from '../../../../store/accommodationStore';
+import CampCard from '../../../features/home/components/campcard/CampCard';
+import useAccommodationStore from '../../../store/accommodationStore';
 
-const NewDestinations = () => {
+const RandomDestinations = () => {
   const { fetchAccommodations } = useAccommodationStore();
   const [randomDestinations, setRandomDestinations] = useState([]);
 
@@ -14,7 +14,7 @@ const NewDestinations = () => {
         // Get all accommodations and randomly select 8
         const allAccommodations = response || [];
         const shuffled = [...allAccommodations].sort(() => 0.5 - Math.random());
-        setRandomDestinations(shuffled.slice(0, 8));
+        setRandomDestinations(shuffled.slice(0, 4));
       } catch (error) {
         console.error('Error fetching destinations:', error);
         setRandomDestinations([]);
@@ -62,4 +62,4 @@ const NewDestinations = () => {
   );
 };
 
-export default NewDestinations;
+export default RandomDestinations;

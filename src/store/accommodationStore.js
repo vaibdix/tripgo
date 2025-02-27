@@ -89,139 +89,126 @@ const applyFilters = (data, filters) => {
 };
 
 const useAccommodationStore = create(
-  devtools(
-    (set, get) => ({
-      accommodations: [],
-      cachedData: {},
-      isLoading: false,
-      error: null,
-      currentType: 'tents',
-      currentPage: 1,
-      totalPages: 1,
+  process.env.NODE_ENV === 'development'
+    ? devtools(
+        (set, get) => ({
+          accommodations: [],
+          isLoading: false,
+          error: null,
+          currentType: 'tents',
+          currentPage: 1,
+          totalPages: 1,
 
-      fetchAccommodations: async (type, page = 1, filters = null) => {
-        set({ isLoading: true, currentType: type, currentPage: page });
+          fetchAccommodations: async (type, page = 1, filters = null) => {
+            set({ isLoading: true, currentType: type, currentPage: page });
 
-        try {
-          // Check if data is in cache
-          if (get().cachedData[type]) {
-            let allData = get().cachedData[type];
+            try {
+              let response;
+              switch (type) {
+                case 'tents':
+                  response = await api.fetchtents();
+                  break;
+                case 'cottages':
+                  response = await api.fetchcottages();
+                  break;
+                case 'farmhouses':
+                  response = await api.fetchfarmhouses();
+                  break;
+                case 'hotels':
+                  response = await api.fetchhotels();
+                  break;
+                case 'homestays':
+                  response = await api.fetchhomestays();
+                  break;
+                case 'treehouses':
+                  response = await api.fetchtreehouses();
+                  break;
+                case 'villas':
+                  response = await api.fetchvillas();
+                  break;
+                default:
+                  response = await api.fetchtents();
+              }
 
-            // Apply filters to cached data if they exist
-            if (filters) {
-              allData = applyFilters(allData, filters);
+              let allData = response.data;
+
+              if (filters) {
+                allData = applyFilters(allData, filters);
+              }
+
+              const paginatedData = allData.slice(
+                (page - 1) * ITEMS_PER_PAGE,
+                page * ITEMS_PER_PAGE
+              );
+
+              set(
+                (state) => ({
+                  accommodations: paginatedData,
+                  totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
+                  isLoading: false,
+                }),
+                false,
+                'fetchAccommodations'
+              ); // Add action name
+
+              return allData;
+            } catch (error) {
+              set(
+                (state) => ({
+                  error: error.message,
+                  isLoading: false,
+                }),
+                false,
+                'fetchAccommodationsError'
+              ); // Add action name
+              console.error(`Error fetching ${type}:`, error);
+              return [];
             }
+          },
 
-            const paginatedData = allData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-            set({
-              accommodations: paginatedData,
-              totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
-              isLoading: false,
-            });
-            return;
-          }
+          changePage: async (page) => {
+            const { currentType } = get();
+            await get().fetchAccommodations(currentType, page);
+          },
 
-          // If not in cache, fetch from API
-          let response;
-          switch (type) {
-            case 'tents':
-              response = await api.fetchtents();
-              break;
-            case 'cottages':
-              response = await api.fetchcottages();
-              break;
-            case 'farmhouses':
-              response = await api.fetchfarmhouses();
-              break;
-            case 'hotels':
-              response = await api.fetchhotels();
-              break;
-            case 'homestays':
-              response = await api.fetchhomestays();
-              break;
-            case 'treehouses':
-              response = await api.fetchtreehouses();
-              break;
-            case 'villas':
-              response = await api.fetchvillas();
-              break;
-            default:
-              response = await api.fetchtents();
-          }
+          getAccommodationById: async (id, type) => {
+            try {
+              console.log('Current type:', type);
+              console.log('Searching for ID:', id);
 
-          let allData = response.data;
+              // First try to find in the specified type
+              const response = await api[`fetch${type}`]();
+              const allData = response.data;
 
-          // Cache the unfiltered data
-          set((state) => ({
-            cachedData: {
-              ...state.cachedData,
-              [type]: allData,
-            },
-          }));
+              // Check for both _id and id
+              const found = allData.find(
+                (item) =>
+                  (item._id && item._id.toString() === id.toString()) ||
+                  (item.id && item.id.toString() === id.toString())
+              );
 
-          // Apply filters if they exist
-          if (filters) {
-            allData = applyFilters(allData, filters);
-          }
+              if (found) {
+                console.log('Found in specified type:', type, found);
+                return found;
+              }
 
-          const paginatedData = allData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-
-          set({
-            accommodations: paginatedData,
-            totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
-            isLoading: false,
-          });
-
-          get().preloadNextCategory(type);
-        } catch (error) {
-          set({ error: error.message, isLoading: false });
-          console.error(`Error fetching ${type}:`, error);
+              console.log('Product not found in specified type, stopping search');
+              return null;
+            } catch (error) {
+              console.error(`Error fetching accommodation by id:`, error);
+              return null;
+            }
+          },
+        }),
+        {
+          name: 'Accommodation Store',
+          enabled: true,
         }
-      },
-
-      changePage: (page) => {
-        const { currentType, cachedData } = get();
-        const allData = cachedData[currentType];
-        const paginatedData = allData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-        set({
-          accommodations: paginatedData,
-          currentPage: page,
-        });
-      },
-
-      preloadNextCategory: async (currentType) => {
-        const categories = [
-          'tents',
-          'cottages',
-          'farmhouses',
-          'hotels',
-          'homestays',
-          'treehouses',
-          'villas',
-        ];
-        const currentIndex = categories.indexOf(currentType);
-        const nextType = categories[(currentIndex + 1) % categories.length];
-
-        // If next category isn't cached, fetch it
-        if (!get().cachedData[nextType]) {
-          try {
-            const response = await api[`fetch${nextType}`]();
-            set((state) => ({
-              cachedData: {
-                ...state.cachedData,
-                [nextType]: response.data,
-              },
-            }));
-          } catch (error) {
-            console.error(`Error preloading ${nextType}:`, error);
-          }
-        }
-      },
-    }),
-    {
-      name: 'Accommodation Store',
-    }
-  )
+      )
+    : (set, get) => ({
+        // Your store configuration without devtools
+        // ... same as above without the devtools specific parts
+      })
 );
 
 export default useAccommodationStore;

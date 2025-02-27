@@ -6,6 +6,7 @@ import About from '../pages/about/About';
 import SignIn from '../features/auth/signin/SignIn';
 import SignUp from '../features/auth/signup/SignUp';
 import Contact from '../features/contact/Contact';
+import ProductDetail from '../features/tours/components/ProductDetail';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: '/tours',
         element: <Tours />,
+      },
+      {
+        path: '/tours/:id',
+        element: <ProductDetail />,
       },
       {
         path: '/about',

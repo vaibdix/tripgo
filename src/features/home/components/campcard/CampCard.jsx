@@ -6,11 +6,22 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './CampCard.css';
+import { useNavigate } from 'react-router-dom';
 
-const CampCard = ({ campName, location, price, actualPrice, rating, images }) => {
+// Add type to the props
+const CampCard = ({ id, type, campName, location, price, actualPrice, rating, images }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    console.log('Clicking card with ID:', id, 'Type:', type);
+    navigate(`/tours/${id}?type=${type}`);
+  };
+
   return (
     <Card
+      onClick={handleClick}
       sx={{
+        cursor: 'pointer',
         borderRadius: '10px',
         position: 'relative',
         maxWidth: 330,
@@ -150,6 +161,7 @@ const CampCard = ({ campName, location, price, actualPrice, rating, images }) =>
   );
 };
 
+// Update defaultProps to include type
 CampCard.defaultProps = {
   images: [],
   rating: 0,
@@ -157,6 +169,7 @@ CampCard.defaultProps = {
   actualPrice: 0,
   campName: '',
   location: '',
+  type: 'tents', // Add default type
 };
 
 export default CampCard;
