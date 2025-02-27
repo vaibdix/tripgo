@@ -88,127 +88,195 @@ const applyFilters = (data, filters) => {
   return filteredData;
 };
 
+// Add to existing store
 const useAccommodationStore = create(
-  process.env.NODE_ENV === 'development'
-    ? devtools(
-        (set, get) => ({
-          accommodations: [],
-          isLoading: false,
-          error: null,
-          currentType: 'tents',
-          currentPage: 1,
-          totalPages: 1,
+  devtools(
+    (set, get) => ({
+      accommodations: [],
+      isLoading: false,
+      error: null,
+      currentType: 'tents',
+      currentPage: 1,
+      totalPages: 1,
 
-          fetchAccommodations: async (type, page = 1, filters = null) => {
-            set({ isLoading: true, currentType: type, currentPage: page });
+      fetchAccommodations: async (type, page = 1, filters = null) => {
+        set({ isLoading: true, currentType: type, currentPage: page });
 
-            try {
-              let response;
-              switch (type) {
-                case 'tents':
-                  response = await api.fetchtents();
-                  break;
-                case 'cottages':
-                  response = await api.fetchcottages();
-                  break;
-                case 'farmhouses':
-                  response = await api.fetchfarmhouses();
-                  break;
-                case 'hotels':
-                  response = await api.fetchhotels();
-                  break;
-                case 'homestays':
-                  response = await api.fetchhomestays();
-                  break;
-                case 'treehouses':
-                  response = await api.fetchtreehouses();
-                  break;
-                case 'villas':
-                  response = await api.fetchvillas();
-                  break;
-                default:
-                  response = await api.fetchtents();
-              }
+        try {
+          let response;
+          switch (type) {
+            case 'tents':
+              response = await api.fetchtents();
+              break;
+            case 'cottages':
+              response = await api.fetchcottages();
+              break;
+            case 'farmhouses':
+              response = await api.fetchfarmhouses();
+              break;
+            case 'hotels':
+              response = await api.fetchhotels();
+              break;
+            case 'homestays':
+              response = await api.fetchhomestays();
+              break;
+            case 'treehouses':
+              response = await api.fetchtreehouses();
+              break;
+            case 'villas':
+              response = await api.fetchvillas();
+              break;
+            default:
+              response = await api.fetchtents();
+          }
 
-              let allData = response.data;
+          let allData = response.data;
 
-              if (filters) {
-                allData = applyFilters(allData, filters);
-              }
+          if (filters) {
+            allData = applyFilters(allData, filters);
+          }
 
-              const paginatedData = allData.slice(
-                (page - 1) * ITEMS_PER_PAGE,
-                page * ITEMS_PER_PAGE
-              );
+          const paginatedData = allData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
-              set(
-                (state) => ({
-                  accommodations: paginatedData,
-                  totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
-                  isLoading: false,
-                }),
-                false,
-                'fetchAccommodations'
-              ); // Add action name
+          set(
+            (state) => ({
+              accommodations: paginatedData,
+              totalPages: Math.ceil(allData.length / ITEMS_PER_PAGE),
+              isLoading: false,
+            }),
+            false,
+            'fetchAccommodations'
+          ); // Add action name
 
-              return allData;
-            } catch (error) {
-              set(
-                (state) => ({
-                  error: error.message,
-                  isLoading: false,
-                }),
-                false,
-                'fetchAccommodationsError'
-              ); // Add action name
-              console.error(`Error fetching ${type}:`, error);
-              return [];
-            }
-          },
-
-          changePage: async (page) => {
-            const { currentType } = get();
-            await get().fetchAccommodations(currentType, page);
-          },
-
-          getAccommodationById: async (id, type) => {
-            try {
-              console.log('Current type:', type);
-              console.log('Searching for ID:', id);
-
-              // First try to find in the specified type
-              const response = await api[`fetch${type}`]();
-              const allData = response.data;
-
-              // Check for both _id and id
-              const found = allData.find(
-                (item) =>
-                  (item._id && item._id.toString() === id.toString()) ||
-                  (item.id && item.id.toString() === id.toString())
-              );
-
-              if (found) {
-                console.log('Found in specified type:', type, found);
-                return found;
-              }
-
-              console.log('Product not found in specified type, stopping search');
-              return null;
-            } catch (error) {
-              console.error(`Error fetching accommodation by id:`, error);
-              return null;
-            }
-          },
-        }),
-        {
-          name: 'Accommodation Store',
-          enabled: true,
+          return allData;
+        } catch (error) {
+          set(
+            (state) => ({
+              error: error.message,
+              isLoading: false,
+            }),
+            false,
+            'fetchAccommodationsError'
+          ); // Add action name
+          console.error(`Error fetching ${type}:`, error);
+          return [];
         }
-      )
-    : (set, get) => ({
-        // Your store configuration without devtools
-        // ... same as above without the devtools specific parts
-      })
+      },
+
+      changePage: async (page) => {
+        const { currentType } = get();
+        await get().fetchAccommodations(currentType, page);
+      },
+
+      getAccommodationById: async (id, type) => {
+        try {
+          console.log('Current type:', type);
+          console.log('Searching for ID:', id);
+
+          // First try to find in the specified type
+          const response = await api[`fetch${type}`]();
+          const allData = response.data;
+
+          // Check for both _id and id
+          const found = allData.find(
+            (item) =>
+              (item._id && item._id.toString() === id.toString()) ||
+              (item.id && item.id.toString() === id.toString())
+          );
+
+          if (found) {
+            console.log('Found in specified type:', type, found);
+            return found;
+          }
+
+          console.log('Product not found in specified type, stopping search');
+          return null;
+        } catch (error) {
+          console.error(`Error fetching accommodation by id:`, error);
+          return null;
+        }
+      },
+      // Initialize wishlist from localStorage
+      wishlist: JSON.parse(localStorage.getItem('wishlist')) || [],
+
+      toggleWishlist: (item) => {
+        set((state) => {
+          const exists = state.wishlist.some((wishItem) => wishItem.id === item.id);
+          const newWishlist = exists
+            ? state.wishlist.filter((wishItem) => wishItem.id !== item.id)
+            : [...state.wishlist, item];
+
+          // Save to localStorage
+          localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+
+          return { wishlist: newWishlist };
+        });
+      },
+
+      isInWishlist: (id) => {
+        const state = get();
+        return state.wishlist.some((item) => item.id === id);
+      },
+
+      // Initialize cart from localStorage
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
+
+      addToCart: (item) => {
+        set((state) => {
+          const existingItem = state.cart.find((cartItem) => cartItem.id === item.id);
+          const newCart = existingItem
+            ? state.cart.map((cartItem) =>
+                cartItem.id === item.id
+                  ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                  : cartItem
+              )
+            : [...state.cart, { ...item, quantity: 1 }];
+
+          // Save to localStorage
+          localStorage.setItem('cart', JSON.stringify(newCart));
+
+          return { cart: newCart };
+        });
+      },
+
+      removeFromCart: (itemId) => {
+        set((state) => {
+          const newCart = state.cart.filter((item) => item.id !== itemId);
+          // Save to localStorage
+          localStorage.setItem('cart', JSON.stringify(newCart));
+          return { cart: newCart };
+        });
+      },
+
+      updateCartItemQuantity: (itemId, quantity) => {
+        set((state) => {
+          const newCart = state.cart.map((item) =>
+            item.id === itemId ? { ...item, quantity } : item
+          );
+          // Save to localStorage
+          localStorage.setItem('cart', JSON.stringify(newCart));
+          return { cart: newCart };
+        });
+      },
+
+      clearCart: () => {
+        // Clear both state and localStorage
+        localStorage.removeItem('cart');
+        set({ cart: [] });
+      },
+
+      getCartTotal: () => {
+        const state = get();
+        return state.cart.reduce(
+          (total, item) => total + item.prices.afterDiscount * item.quantity,
+          0
+        );
+      },
+    }),
+    {
+      name: 'Accommodation Store',
+    }
+  )
 );
 
 export default useAccommodationStore;

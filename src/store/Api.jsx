@@ -10,4 +10,9 @@ export const api = {
   fetchhomestays: () => axios.get(`${BASE_URL}/homestays`),
   fetchtreehouses: () => axios.get(`${BASE_URL}/treehouses`),
   fetchvillas: () => axios.get(`${BASE_URL}/villas`),
+
+  // auth endpoint
+  register: (userData) => axios.post(`${BASE_URL}/auth/register`, userData),
+  login: (credentials) => axios.post(`${BASE_URL}/auth/login`, credentials),
+  logout: () => axios.post(`${BASE_URL}/auth/logout`),
 };
