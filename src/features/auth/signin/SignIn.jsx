@@ -6,18 +6,26 @@ import {
   FormControlLabel,
   TextField,
   Typography,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../../store/Api';
 import hike from '../../../assets/images/hike.jpg';
+import useAuthStore from '../../../store/authStore';
 
 const SignIn = () => {
+  const login = useAuthStore((state) => state.login);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -25,11 +33,27 @@ const SignIn = () => {
       ...prev,
       [name]: name === 'rememberMe' ? checked : value,
     }));
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await login({
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      });
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -85,6 +109,12 @@ const SignIn = () => {
             onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
           >
+            {error && (
+              <Alert severity="error" sx={{ bgcolor: 'transparent', color: '#ff4444' }}>
+                {error}
+              </Alert>
+            )}
+
             <TextField
               fullWidth
               label="Email"
@@ -145,6 +175,7 @@ const SignIn = () => {
               type="submit"
               variant="contained"
               fullWidth
+              disabled={isLoading}
               sx={{
                 py: 1.5,
                 bgcolor: '#7C3AED',
@@ -153,7 +184,7 @@ const SignIn = () => {
                 borderRadius: 1,
               }}
             >
-              Sign in
+              {isLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Sign in'}
             </Button>
 
             <Button
