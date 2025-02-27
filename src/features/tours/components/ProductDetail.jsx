@@ -50,6 +50,7 @@ import useAccommodationStore from '../../../store/accommodationStore';
 import RandomDestinations from './RandomDestinations';
 import DiningOptions from './DiningOptions';
 import SpecialPackages from './SpecialPackages';
+import { useNavigate } from 'react-router-dom';
 
 const amenities = {
   Restaurant: <Hotel />,
@@ -70,6 +71,9 @@ const freeServices = {
   'Free Parking': <ParkingCircle />,
 };
 
+// Add this import at the top with other imports
+import CartSidebar from '../../cart/components/CartSidebar';
+
 const ProductDetail = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -79,6 +83,13 @@ const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [tabValue, setTabValue] = useState(0);
+  const navigate = useNavigate();
+  const { addToCart } = useAccommodationStore();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -407,14 +418,18 @@ const ProductDetail = () => {
             <Button
               variant="contained"
               fullWidth
+              onClick={() => {
+                addToCart(product);
+                // setIsCartOpen(true); // Open the sidebar when adding to cart
+                navigate('/cart');
+              }}
               sx={{
                 backgroundColor: 'black',
                 py: 1.5,
-
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.8)' },
               }}
             >
-              Book Now
+              Add to Cart
             </Button>
           </Paper>
         </Grid>
@@ -784,6 +799,7 @@ const ProductDetail = () => {
         </Grid>
       </Grid>
       <RandomDestinations />
+      <CartSidebar open={isCartOpen} onClose={() => setIsCartOpen(false)} product={product} />
     </Box>
   );
 };

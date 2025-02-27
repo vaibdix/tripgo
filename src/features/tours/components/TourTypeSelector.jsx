@@ -1,4 +1,12 @@
-import { Box, FormControl, Select, MenuItem, ToggleButtonGroup, ToggleButton, CircularProgress } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  ToggleButtonGroup,
+  ToggleButton,
+  CircularProgress,
+} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const accommodationTypes = [
