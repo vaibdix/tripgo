@@ -24,7 +24,6 @@ const CampCardSkeleton = () => {
           <Skeleton width={120} height={24} />
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Skeleton circle width={28} height={28} />
-            <Skeleton circle width={28} height={28} />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

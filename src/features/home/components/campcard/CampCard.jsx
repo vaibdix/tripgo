@@ -7,14 +7,35 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './CampCard.css';
 import { useNavigate } from 'react-router-dom';
+import heart from '../../../../assets/svg/heart.svg';
+import heartfilled from '../../../../assets/svg/heartfilled.svg';
+import { Plus } from 'lucide-react';
+import CampModal from '../campmodal/CampModal';
+import { useState } from 'react';
+import { Star } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import useAccommodationStore from '../../../../store/accommodationStore';
 
 // Add type to the props
 const CampCard = ({ id, type, campName, location, price, actualPrice, rating, images }) => {
   const navigate = useNavigate();
-
+  const [modalOpen, setModalOpen] = useState(false);
   const handleClick = () => {
     console.log('Clicking card with ID:', id, 'Type:', type);
     navigate(`/tours/${id}?type=${type}`);
+  };
+
+  const { toggleWishlist, isInWishlist } = useAccommodationStore();
+  const isWishlisted = isInWishlist(id);
+
+  const handleHeartClick = (e) => {
+    e.stopPropagation();
+    toggleWishlist({ id, type, campName, location, price, actualPrice, rating, images });
+  };
+
+  const handlePlusClick = (e) => {
+    e.stopPropagation(); // Prevent card click event
+    setModalOpen(true);
   };
 
   return (
@@ -42,12 +63,12 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
           elevation: 0,
         }}
       >
-        <IconButton sx={{ backgroundColor: 'white', width: 25, height: 25 }}>
+        {/* <IconButton sx={{ backgroundColor: 'white', width: 25, height: 25 }}>
           <SelfImprovement sx={{ fontSize: 20 }} />
         </IconButton>
         <IconButton sx={{ backgroundColor: 'white', width: 25, height: 25 }}>
           <LocalFireDepartment sx={{ fontSize: 20 }} />
-        </IconButton>
+        </IconButton> */}
       </Box>
 
       <Box sx={{ position: 'relative' }}>
@@ -75,6 +96,30 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
           ))}
         </Swiper>
 
+        {/* Add Plus Icon */}
+        <IconButton
+          onClick={handlePlusClick}
+          sx={{
+            position: 'absolute',
+            bottom: 15,
+            right: 15,
+            backgroundColor: '#F0EDE9',
+            width: 28,
+            height: 28,
+            zIndex: 2,
+            '&:hover': {
+              backgroundColor: '#E5E2DE',
+            },
+          }}
+        >
+          <Plus size={16} color="#101F37" />
+        </IconButton>
+        <CampModal
+          open={modalOpen}
+          handleClose={() => setModalOpen(false)}
+          campData={{ id, type, campName, location, price, actualPrice, rating, images }}
+        />
+
         {/* Rating & Weather Overlay */}
         <Box
           sx={{
@@ -90,10 +135,10 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
             zIndex: 2,
           }}
         >
-          <StarBorder sx={{ color: 'gold', fontSize: 16 }} />
+          <Star size={16} color="gold" />
           <Typography sx={{ fontSize: 14, ml: 0.5 }}>{rating}</Typography>
-          <Cloud sx={{ color: 'blue', fontSize: 16, ml: 1 }} />
-          <Typography sx={{ fontSize: 14, ml: 0.5 }}>28°C</Typography>
+          {/* <Cloud sx={{ color: 'blue', fontSize: 16, ml: 1 }} />
+          <Typography sx={{ fontSize: 14, ml: 0.5 }}>28°C</Typography> */}
         </Box>
       </Box>
 
@@ -119,30 +164,28 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
             {campName}
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <BedOutlined
+            <IconButton
+              onClick={handleHeartClick}
               sx={{
-                color: 'blue',
-                fontSize: 28,
-                backgroundColor: 'white',
-                borderRadius: '50%',
-                border: '1px solid gray',
-                padding: 0.5,
+                width: 33,
+                height: 33,
+                backgroundColor: '#F0EDE9',
+                '&:hover': { backgroundColor: '#E5E2DE' },
               }}
-            />
-            <CloudOutlined
-              sx={{
-                color: 'green',
-                fontSize: 28,
-                backgroundColor: 'white',
-                borderRadius: '50%',
-                border: '1px solid gray',
-                padding: 0.5,
-              }}
-            />
+            >
+              <img
+                src={isWishlisted ? heartfilled : heart}
+                alt="heart"
+                style={{
+                  width: '20px',
+                  height: '20px',
+                }}
+              />
+            </IconButton>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="body3" sx={{ fontWeight: 'bold' }}>
             ₹ {price}
           </Typography>
           <Typography

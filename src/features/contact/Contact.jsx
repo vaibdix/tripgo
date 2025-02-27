@@ -30,7 +30,33 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (!formData.agreeToPrivacy) {
+      alert('Please agree to our privacy policy');
+      return;
+    }
+
+    const subject = `Contact Form: ${formData.firstName} ${formData.lastName}`;
+    const body = `
+      Name: ${formData.firstName} ${formData.lastName}
+      Email: ${formData.email}
+      Phone: ${formData.phoneNumber}
+
+      Message:
+      ${formData.message}
+    `;
+
+    window.location.href = `mailto:email@email.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Clear form after sending
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      message: '',
+      agreeToPrivacy: false,
+    });
   };
 
   return (

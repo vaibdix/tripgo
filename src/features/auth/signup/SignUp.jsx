@@ -6,30 +6,70 @@ import {
   FormControlLabel,
   TextField,
   Typography,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../../store/Api';
 import hike from '../../../assets/images/hike.jpg';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'rememberMe' ? checked : value,
+      [name]: value,
     }));
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsLoading(true);
+    setError(null);
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.password) {
+      setError('All fields are required');
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await api.register(formData);
+
+      if (response.data) {
+        // Store the token if provided
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
+
+        // Redirect to login page after successful registration
+        navigate('/login');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -124,6 +164,12 @@ const SignUp = () => {
             Start your 30-day free trial.
           </Typography>
 
+          {error && (
+            <Alert severity="error" sx={{ mb: 2, bgcolor: 'transparent', color: '#ff4444' }}>
+              {error}
+            </Alert>
+          )}
+
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -188,6 +234,7 @@ const SignUp = () => {
               type="submit"
               variant="contained"
               fullWidth
+              disabled={isLoading}
               sx={{
                 py: 1.5,
                 bgcolor: '#7C3AED',
@@ -196,7 +243,7 @@ const SignUp = () => {
                 borderRadius: 1,
               }}
             >
-              Get started
+              {isLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Get started'}
             </Button>
 
             <Button

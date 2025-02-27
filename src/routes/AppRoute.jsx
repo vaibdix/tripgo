@@ -7,6 +7,10 @@ import SignIn from '../features/auth/signin/SignIn';
 import SignUp from '../features/auth/signup/SignUp';
 import Contact from '../features/contact/Contact';
 import ProductDetail from '../features/tours/components/ProductDetail';
+import WishlistPage from '../features/wishlist/pages/WishlistPage';
+import Cart from '../features/cart/Cart';
+import Checkout from '../features/checkout/Checkout';
+import Dashboard from '../features/admin/Dashboard';
 
 export const router = createBrowserRouter([
   {
@@ -41,10 +45,33 @@ export const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
+      {
+        path: '/wishlist',
+        element: <WishlistPage />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
       //   {
       //     path: '/product/:id',
       //     element: <Product />,
       //   },
+      // Add this to your routes array
+      {
+        path: '/checkout',
+        element: <Checkout />,
+      },
+      // Add this to your routes array
+      {
+        path: '/admin',
+        element: <Dashboard />,
+      }
     ],
   },
+  // Add a separate route configuration for admin
+  {
+    path: '/admin/*',
+    element: <Dashboard />,
+  }
 ]);

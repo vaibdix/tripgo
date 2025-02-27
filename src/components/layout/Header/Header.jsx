@@ -1,15 +1,34 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography, Badge, Drawer } from '@mui/material';
-import { Search, Bookmark, Menu } from 'lucide-react';
+import { Search, Bookmark, Menu, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import logo from '../../../assets/images/logo.png';
+import cart from '../../../assets/svg/cart.svg';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+import useAuthStore from '../../../store/authStore';
+import useAccommodationStore from '../../../store/accommodationStore';
+// In your Header component
 function Header() {
+  const { isAuthenticated, logout } = useAuthStore();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { wishlist, cart } = useAccommodationStore();
+
+  // Remove this section as it's outside the return statement
+  // <IconButton onClick={() => navigate('/cart')} sx={{ backgroundColor: '#F5F1EE' }}>
+  //   <Badge badgeContent={cart.length} color="warning" sx={{ border: '1px solid #F5F1EE' }}>
+  //     <ShoppingBag size={28} color="#101F37" />
+  //   </Badge>
+  // </IconButton>;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -56,33 +75,58 @@ function Header() {
         {/* Actions Section */}
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', ml: 'auto' }}>
           <IconButton sx={{ backgroundColor: '#F5F1EE' }}>
-            <Search size={20} color="#875541" style={{}} />
+            <Search size={20} color="#875541" />
           </IconButton>
-          <IconButton sx={{ backgroundColor: '#EEEFF8' }}>
-            <Badge badgeContent={2} color="warning" sx={{ border: '1px solid #F5F1EE' }}>
+
+          {/* Replace this cart IconButton */}
+          <IconButton onClick={() => navigate('/cart')} sx={{ backgroundColor: '#F5F1EE' }}>
+            <Badge badgeContent={cart.length} color="warning" sx={{ border: '1px solid #F5F1EE' }}>
+              <ShoppingBag size={20} color="#101F37" />
+            </Badge>
+          </IconButton>
+
+          <IconButton onClick={() => navigate('/wishlist')} sx={{ backgroundColor: '#EEEFF8' }}>
+            <Badge
+              badgeContent={wishlist.length}
+              color="warning"
+              sx={{ border: '1px solid #F5F1EE' }}
+            >
               <Bookmark size={20} color="#101F37" />
             </Badge>
           </IconButton>
-          <Button
-            component={Link}
-            to="/login"
-            sx={{
-              borderRadius: 28,
-              px: 3,
-              py: 1,
-              color: 'black',
-              backgroundColor: '#f9f7f4',
-              fontWeight: 'semibold',
-            }}
-          >
-            Login
-          </Button>
-          <IconButton
-            sx={{ display: { md: 'none' }, border: '1px solid #1a1a1a' }}
-            onClick={handleDrawerToggle}
-          >
-            <Menu size={20} color="#1a1a1a" />
-          </IconButton>
+
+          {isAuthenticated ? (
+            <Button
+              onClick={handleLogout}
+              sx={{
+                borderRadius: 28,
+                px: 3,
+                py: 1,
+                color: 'black',
+                backgroundColor: '#f9f7f4',
+                fontWeight: 'semibold',
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              component={Link}
+              to="/login"
+              sx={{
+                borderRadius: 28,
+                px: 3,
+                py: 1,
+                color: 'black',
+                backgroundColor: '#f9f7f4',
+                fontWeight: 'semibold',
+              }}
+            >
+              Login
+            </Button>
+          )}
+
+          {/* mobile menu button */}
         </Box>
       </Toolbar>
 
