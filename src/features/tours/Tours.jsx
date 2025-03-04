@@ -1,3 +1,9 @@
+import useAccommodationStore from '../../store/accommodationStore';
+import AccommodationFilters from './components/AccommodationFilters';
+import TourHeader from './components/TourHeader';
+import TourList from './components/TourList';
+import TourTypeSelector from './components/TourTypeSelector';
+import { FilterList } from '@mui/icons-material';
 import {
   Box,
   ToggleButton,
@@ -8,14 +14,8 @@ import {
   FormControl,
   Collapse,
 } from '@mui/material';
-import { FilterList } from '@mui/icons-material';
-import { useState, useEffect, useTransition } from 'react';
-import useAccommodationStore from '../../store/accommodationStore';
-import AccommodationFilters from './components/AccommodationFilters';
 import { useTheme, useMediaQuery } from '@mui/material';
-import TourHeader from './components/TourHeader';
-import TourTypeSelector from './components/TourTypeSelector';
-import TourList from './components/TourList';
+import { useState, useEffect, useTransition } from 'react';
 
 const Tours = () => {
   const [tentType, setTentType] = useState('tents');

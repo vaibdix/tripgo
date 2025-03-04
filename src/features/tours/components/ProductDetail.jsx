@@ -1,5 +1,26 @@
-import { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import useAccommodationStore from '../../../store/accommodationStore';
+// Add this import at the top with other imports
+import CartSidebar from '../../cart/components/CartSidebar';
+import DiningOptions from './DiningOptions';
+import RandomDestinations from './RandomDestinations';
+import SpecialPackages from './SpecialPackages';
+import {
+  SportsEsports,
+  Person,
+  Pool,
+  LocalFireDepartment,
+  OutdoorGrill,
+  Park,
+} from '@mui/icons-material';
+import AttractionsIcon from '@mui/icons-material/Attractions';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import KingBedIcon from '@mui/icons-material/KingBed';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import {
   Box,
   Typography,
@@ -14,14 +35,6 @@ import {
   Tooltip,
 } from '@mui/material';
 import {
-  SportsEsports,
-  Person,
-  Pool,
-  LocalFireDepartment,
-  OutdoorGrill,
-  Park,
-} from '@mui/icons-material';
-import {
   Footprints,
   SquareActivity,
   MapIcon,
@@ -35,21 +48,8 @@ import {
   Landmark,
   Mountain,
 } from 'lucide-react';
-
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ReviewsIcon from '@mui/icons-material/Reviews';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import AttractionsIcon from '@mui/icons-material/Attractions';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import KingBedIcon from '@mui/icons-material/KingBed';
-
-import useAccommodationStore from '../../../store/accommodationStore';
-import RandomDestinations from './RandomDestinations';
-import DiningOptions from './DiningOptions';
-import SpecialPackages from './SpecialPackages';
+import { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const amenities = {
@@ -70,9 +70,6 @@ const freeServices = {
   'Free Breakfast': <Soup />,
   'Free Parking': <ParkingCircle />,
 };
-
-// Add this import at the top with other imports
-import CartSidebar from '../../cart/components/CartSidebar';
 
 const ProductDetail = () => {
   const { id } = useParams();

@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material';
 import catebg from '../../../assets/images/catebg.png';
+import { Box, Typography } from '@mui/material';
 
 const TourHeader = () => (
   <Box

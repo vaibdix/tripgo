@@ -1,3 +1,4 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
   FormControl,
@@ -7,7 +8,6 @@ import {
   ToggleButton,
   CircularProgress,
 } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const accommodationTypes = [
   { value: 'tents', label: 'Tents' },

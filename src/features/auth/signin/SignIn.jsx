@@ -1,3 +1,8 @@
+import hike from '../../../assets/images/hike.jpg';
+import useAuthStore from '../../../store/authStore';
+import GoogleIcon from '@mui/icons-material/Google';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   Box,
   Button,
@@ -8,17 +13,37 @@ import {
   Typography,
   CircularProgress,
   Alert,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../../../store/Api';
-import hike from '../../../assets/images/hike.jpg';
-import useAuthStore from '../../../store/authStore';
 
 const SignIn = () => {
   const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const initAuth = useAuthStore((state) => state.initAuth);
   const navigate = useNavigate();
+
+  // Add a ref to track if auth check has been performed
+  const authCheckPerformed = useRef(false);
+
+  // Check for existing auth on component mount
+  useEffect(() => {
+    // Only run this once
+    if (!authCheckPerformed.current) {
+      // Try to restore authentication state
+      const authRestored = initAuth();
+
+      // If authentication was restored, redirect to home
+      if (authRestored || isAuthenticated) {
+        navigate('/');
+      }
+
+      authCheckPerformed.current = true;
+    }
+  }, [initAuth, isAuthenticated, navigate]);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,6 +51,7 @@ const SignIn = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -35,6 +61,10 @@ const SignIn = () => {
     }));
     // Clear error when user starts typing
     if (error) setError(null);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -137,10 +167,23 @@ const SignIn = () => {
               fullWidth
               label="Password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleTogglePasswordVisibility}
+                      edge="end"
+                      sx={{ color: 'grey.500' }}
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   color: 'white',

@@ -1,3 +1,8 @@
+import hike from '../../../assets/images/hike.jpg';
+import { api } from '../../../store/Api';
+import GoogleIcon from '@mui/icons-material/Google';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   Box,
   Button,
@@ -8,12 +13,11 @@ import {
   Typography,
   CircularProgress,
   Alert,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../../../store/Api';
-import hike from '../../../assets/images/hike.jpg';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -21,18 +25,24 @@ const SignUp = () => {
     name: '',
     email: '',
     password: '',
+    admin: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
     // Clear error when user starts typing
     if (error) setError(null);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -214,12 +224,25 @@ const SignUp = () => {
               fullWidth
               label="Password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
               variant="outlined"
               helperText="Must be at least 8 characters."
               FormHelperTextProps={{ sx: { color: 'grey.500' } }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleTogglePasswordVisibility}
+                      edge="end"
+                      sx={{ color: 'grey.500' }}
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   color: 'white',
@@ -228,6 +251,27 @@ const SignUp = () => {
                 },
                 '& .MuiInputLabel-root': { color: 'grey.500' },
               }}
+            />
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="admin"
+                  checked={formData.admin}
+                  onChange={handleChange}
+                  sx={{
+                    color: 'rgba(255,255,255,0.5)',
+                    '&.Mui-checked': {
+                      color: '#7C3AED',
+                    },
+                  }}
+                />
+              }
+              label={
+                <Typography variant="body2" sx={{ color: 'grey.500' }}>
+                  Register as Admin
+                </Typography>
+              }
             />
 
             <Button

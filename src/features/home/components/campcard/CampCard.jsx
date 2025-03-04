@@ -1,20 +1,20 @@
-import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
-import { SelfImprovement, LocalFireDepartment } from '@mui/icons-material';
-import { BedOutlined, StarBorder, CloudOutlined, Cloud } from '@mui/icons-material';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './CampCard.css';
-import { useNavigate } from 'react-router-dom';
 import heart from '../../../../assets/svg/heart.svg';
 import heartfilled from '../../../../assets/svg/heartfilled.svg';
-import { Plus } from 'lucide-react';
+import useAccommodationStore from '../../../../store/accommodationStore';
 import CampModal from '../campmodal/CampModal';
-import { useState } from 'react';
+import './CampCard.css';
+import { SelfImprovement, LocalFireDepartment } from '@mui/icons-material';
+import { BedOutlined, StarBorder, CloudOutlined, Cloud } from '@mui/icons-material';
+import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
+import { Plus } from 'lucide-react';
 import { Star } from 'lucide-react';
 import { Heart } from 'lucide-react';
-import useAccommodationStore from '../../../../store/accommodationStore';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Add type to the props
 const CampCard = ({ id, type, campName, location, price, actualPrice, rating, images }) => {

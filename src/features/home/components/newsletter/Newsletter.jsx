@@ -1,7 +1,7 @@
 // import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
-import { Facebook, Instagram, Twitter, Youtube, ArrowRight } from 'lucide-react';
-import { Box, Typography, IconButton, TextField, InputAdornment, Divider } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Typography, IconButton, TextField, InputAdornment, Divider } from '@mui/material';
+import { Facebook, Instagram, Twitter, Youtube, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (

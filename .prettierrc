@@ -10,5 +10,8 @@
   "endOfLine": "auto",
   "jsxSingleQuote": false,
   "quoteProps": "as-needed",
-  "useTabs": false
+  "useTabs": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+  "importOrderTypeScriptVersion": "5.0.0"
 }

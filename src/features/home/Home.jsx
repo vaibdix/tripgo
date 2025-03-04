@@ -1,9 +1,9 @@
-import { Box, Container } from '@mui/material';
-import Hero from './components/hero/Hero';
 import CampLocation from './components/camplocation/CampLocation';
-import NordicSection from './components/nordicsection/NordicSection';
+import Hero from './components/hero/Hero';
 import NewDestinations from './components/newdestinations/NewDestinations';
 import Newsletter from './components/newsletter/Newsletter';
+import NordicSection from './components/nordicsection/NordicSection';
+import { Box, Container } from '@mui/material';
 
 const Home = () => {
   return (

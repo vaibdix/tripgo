@@ -1,8 +1,8 @@
-import React from 'react';
-import { Box, Typography, styled, useMediaQuery, useTheme } from '@mui/material';
-import gridnordicimage from '../../../../assets/images/gridnordicimage.jpg';
 import card1Bg from '../../../../assets/images/bgstar.png';
 import card4Bg from '../../../../assets/images/bgstar.png';
+import gridnordicimage from '../../../../assets/images/gridnordicimage.jpg';
+import { Box, Typography, styled, useMediaQuery, useTheme } from '@mui/material';
+import React from 'react';
 
 const GridContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

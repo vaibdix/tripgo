@@ -1,10 +1,10 @@
-import { Box, Container, Typography, Grid } from '@mui/material';
 import aimg from '../../assets/images/aboutimage.jpg';
-import team from '../../assets/images/team.jpg.webp';
-import quality from '../../assets/images/quality.png';
-import travelStory from '../../assets/images/travelstory.jpg';
-import hike from '../../assets/images/hike.jpg';
 import campfire from '../../assets/images/campfire.jpg';
+import hike from '../../assets/images/hike.jpg';
+import quality from '../../assets/images/quality.png';
+import team from '../../assets/images/team.jpg.webp';
+import travelStory from '../../assets/images/travelstory.jpg';
+import { Box, Container, Typography, Grid } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 const About = () => {

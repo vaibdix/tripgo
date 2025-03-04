@@ -1,22 +1,32 @@
 {
-    "users": [
-        {
-            "id": 1740492192,
-            "name": "John Doe",
-            "email": "john@example.com",
-            "password": "$2b$10$UQcvO549uHhsIUL/M/wRD.LtfmjF/b1qXrt/Ua4iQOeYUqjSNVFeq"
-        },
-        {
-            "id": 1740492228,
-            "name": "Doe John",
-            "email": "Doe@example.com",
-            "password": "$2b$10$Cx3xMajoln/CbH2J7rnPw.Nf2xwAHQI//2zK8305JRZCbGVyHdNi6"
-        },
-        {
-            "id": 1740494250,
-            "name": "temp1",
-            "email": "temp1@temp1.com",
-            "password": "$2b$10$DucBQoWiruj.NoUBOn0c6.e2JxyVa613XR46v/75a7J5bTh9rHAIC"
-        }
-    ]
+  "users": [
+    {
+      "id": 1740492192,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "$2b$10$UQcvO549uHhsIUL/M/wRD.LtfmjF/b1qXrt/Ua4iQOeYUqjSNVFeq",
+      "admin": true
+    },
+    {
+      "id": 1740492228,
+      "name": "Doe John",
+      "email": "Doe@example.com",
+      "password": "$2b$10$Cx3xMajoln/CbH2J7rnPw.Nf2xwAHQI//2zK8305JRZCbGVyHdNi6",
+      "admin": false
+    },
+    {
+      "id": 1741032666,
+      "name": "user",
+      "email": "user@example.com",
+      "password": "$2b$10$PNl2G8XBN0Gd7pJzgIhRquI18gYfhMkDy3Y6Zc1kR2MoI13zTEeJi",
+      "admin": false
+    },
+    {
+      "id": 1741034823,
+      "name": "newadmin1",
+      "email": "newadmin@newadmin.com",
+      "password": "$2b$10$8i1lVx71Dd16TRrtBShbverg78a/WsHRyqH0DmBu66H3OWVllNHs2",
+      "admin": true
+    }
+  ]
 }

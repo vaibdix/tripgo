@@ -1,16 +1,19 @@
-import { createBrowserRouter } from 'react-router-dom';
+import AdminRoute from '../components/AdminRoute';
 import MainLayout from '../components/MainLayout';
-import Home from '../features/home/Home';
-import Tours from '../features/tours/Tours';
-import About from '../pages/about/About';
+import Dashboard from '../features/admin/Dashboard';
 import SignIn from '../features/auth/signin/SignIn';
 import SignUp from '../features/auth/signup/SignUp';
-import Contact from '../features/contact/Contact';
-import ProductDetail from '../features/tours/components/ProductDetail';
-import WishlistPage from '../features/wishlist/pages/WishlistPage';
 import Cart from '../features/cart/Cart';
 import Checkout from '../features/checkout/Checkout';
-import Dashboard from '../features/admin/Dashboard';
+import Contact from '../features/contact/Contact';
+import Home from '../features/home/Home';
+import Tours from '../features/tours/Tours';
+import ProductDetail from '../features/tours/components/ProductDetail';
+import WishlistPage from '../features/wishlist/pages/WishlistPage';
+import About from '../pages/about/About';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+
+// We'll create this component
 
 export const router = createBrowserRouter([
   {
@@ -53,25 +56,29 @@ export const router = createBrowserRouter([
         path: '/cart',
         element: <Cart />,
       },
-      //   {
-      //     path: '/product/:id',
-      //     element: <Product />,
-      //   },
-      // Add this to your routes array
+      // Protected checkout route
       {
         path: '/checkout',
         element: <Checkout />,
       },
-      // Add this to your routes array
-      {
-        path: '/admin',
-        element: <Dashboard />,
-      }
+      // Remove the admin route from MainLayout
     ],
   },
-  // Add a separate route configuration for admin
+  // Move all admin routes outside of MainLayout
+  {
+    path: '/admin',
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
+  },
   {
     path: '/admin/*',
-    element: <Dashboard />,
-  }
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
+  },
 ]);

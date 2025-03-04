@@ -1,6 +1,6 @@
+import { api } from './Api';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { api } from './Api';
 
 const useTentStore = create(
   devtools(

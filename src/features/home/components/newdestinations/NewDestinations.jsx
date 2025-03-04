@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, Container, Grid } from '@mui/material';
-import CampCard from '../campcard/CampCard';
 import useAccommodationStore from '../../../../store/accommodationStore';
+import CampCard from '../campcard/CampCard';
+import { Box, Typography, Container, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 const NewDestinations = () => {
   const { fetchAccommodations } = useAccommodationStore();

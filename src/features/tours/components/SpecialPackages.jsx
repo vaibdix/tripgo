@@ -1,5 +1,5 @@
-import { Box, Typography, Grid, Paper } from '@mui/material';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import { Box, Typography, Grid, Paper } from '@mui/material';
 
 const SpecialPackages = ({ packages }) => {
   // Calculate grid columns based on number of packages

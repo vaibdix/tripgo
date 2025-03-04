@@ -1,4 +1,5 @@
-import React from 'react';
+import useAccommodationStore from '../../store/accommodationStore';
+import { Add, Remove, ArrowBack, ArrowForward } from '@mui/icons-material';
 import {
   Box,
   Typography,
@@ -11,8 +12,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { Add, Remove, ArrowBack, ArrowForward } from '@mui/icons-material';
-import useAccommodationStore from '../../store/accommodationStore';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
@@ -309,7 +309,7 @@ const Cart = () => {
                   onClick={() => removeFromCart(item.id)}
                   sx={{
                     mt: -4,
-                    ml: -13
+                    ml: -13,
                   }}
                 >
                   Remove
@@ -366,9 +366,7 @@ const Cart = () => {
                   <Typography sx={{ color: 'text.primary', fontSize: '0.95rem' }}>
                     Subtotal
                   </Typography>
-                  <Typography sx={{ fontWeight: 400, fontSize: '0.95rem' }}>
-                    ₹{total}
-                  </Typography>
+                  <Typography sx={{ fontWeight: 400, fontSize: '0.95rem' }}>₹{total}</Typography>
                 </Box>
                 <Box
                   sx={{
@@ -421,8 +419,6 @@ const Cart = () => {
               >
                 Proceed to Checkout
               </Button>
-
-              
             </Box>
           </Grid>
         </Grid>

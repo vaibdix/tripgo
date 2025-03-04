@@ -1,8 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import App from './App';
+import './features/admin/components/i18n';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import App from './App';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 const theme = createTheme({});
 

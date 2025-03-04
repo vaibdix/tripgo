@@ -1,11 +1,11 @@
 import ErrorBoundary from './components/ErrorBoundry';
-import { ReactLenis } from 'lenis/react';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './routes/AppRoute';
-import { Suspense, useState, useEffect } from 'react';
-import { Box, CircularProgress, createTheme } from '@mui/material';
-import { ThemeProvider } from '@emotion/react';
 import PromoModal from './components/PromoModal';
+import { router } from './routes/AppRoute';
+import { ThemeProvider } from '@emotion/react';
+import { Box, CircularProgress, createTheme } from '@mui/material';
+import { ReactLenis } from 'lenis/react';
+import { Suspense, useState, useEffect } from 'react';
+import { RouterProvider } from 'react-router-dom';
 
 const LoadingSkeleton = () => (
   <Box

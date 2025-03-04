@@ -1,3 +1,5 @@
+import tent from '../assets/images/hike.jpg';
+import { Close as CloseIcon } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -7,9 +9,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
 import { useState } from 'react';
-import tent from '../assets/images/hike.jpg';
 
 const PromoModal = ({ open, onClose }) => {
   const [email, setEmail] = useState('');

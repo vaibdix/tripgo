@@ -1,8 +1,8 @@
-import { Box, Typography } from '@mui/material';
-import konkan from '../../../../assets/images/konkan.png';
-import ecoast from '../../../../assets/images/ecoast.png';
-import canada from '../../../../assets/images/canada.png';
 import andaman from '../../../../assets/images/andaman.png';
+import canada from '../../../../assets/images/canada.png';
+import ecoast from '../../../../assets/images/ecoast.png';
+import konkan from '../../../../assets/images/konkan.png';
+import { Box, Typography } from '@mui/material';
 
 function CampLocation() {
   return (

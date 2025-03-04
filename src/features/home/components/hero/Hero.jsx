@@ -1,5 +1,5 @@
-import { Typography, Box, Grid, Card, CardMedia } from '@mui/material';
 import herooimg from '../../../../assets/images/herooimg.jpg';
+import { Typography, Box, Grid, Card, CardMedia } from '@mui/material';
 
 export default function Hero() {
   return (

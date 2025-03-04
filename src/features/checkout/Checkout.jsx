@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Box, Container, Typography, TextField, Button, Grid, Divider } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import useAccommodationStore from '../../store/accommodationStore';
+import { Box, Container, Typography, TextField, Button, Grid, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
+import { api } from './Api';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { api } from './Api';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -98,6 +98,135 @@ const useAccommodationStore = create(
       currentType: 'tents',
       currentPage: 1,
       totalPages: 1,
+
+      // Add users state
+      users: [],
+      usersLoading: false,
+      usersError: null,
+
+      // Fetch users function
+      fetchUsers: async () => {
+        set({ usersLoading: true });
+        try {
+          const response = await api.getallusers();
+          // Ensure admin property is boolean for all users
+          const users = response.data.map((user) => ({
+            ...user,
+            admin: !!user.admin,
+          }));
+
+          set(
+            {
+              users,
+              usersLoading: false,
+              usersError: null,
+            },
+            false,
+            'fetchUsers'
+          );
+          return users;
+        } catch (error) {
+          set(
+            {
+              usersError: error.message,
+              usersLoading: false,
+            },
+            false,
+            'fetchUsersError'
+          );
+          console.error('Error fetching users:', error);
+          return [];
+        }
+      },
+
+      // Add user
+      addUser: async (userData) => {
+        set({ usersLoading: true });
+        try {
+          // Ensure admin is boolean before sending
+          const dataToSend = {
+            ...userData,
+            admin: !!userData.admin,
+          };
+
+          const response = await api.addUser(dataToSend);
+          // Ensure admin is boolean in the response
+          const newUser = {
+            ...response.data,
+            admin: !!response.data.admin,
+          };
+
+          set((state) => ({
+            users: [...state.users, newUser],
+            usersLoading: false,
+            usersError: null,
+          }));
+          return true;
+        } catch (error) {
+          set({
+            usersError: error.message,
+            usersLoading: false,
+          });
+          console.error('Error adding user:', error);
+          return false;
+        }
+      },
+
+      // Update user
+      updateUser: async (userId, userData) => {
+        set({ usersLoading: true });
+        try {
+          // Ensure admin is boolean before sending
+          const dataToSend = {
+            ...userData,
+            admin: userData.admin !== undefined ? !!userData.admin : undefined,
+          };
+
+          const response = await api.updateUser(userId, dataToSend);
+          // Ensure admin is boolean in the response
+          const updatedUser = {
+            ...response.data,
+            admin: !!response.data.admin,
+          };
+
+          set((state) => ({
+            users: state.users.map((user) =>
+              user.id === userId || user._id === userId ? updatedUser : user
+            ),
+            usersLoading: false,
+            usersError: null,
+          }));
+          return true;
+        } catch (error) {
+          set({
+            usersError: error.message,
+            usersLoading: false,
+          });
+          console.error('Error updating user:', error);
+          return false;
+        }
+      },
+
+      // Delete user
+      deleteUser: async (userId) => {
+        set({ usersLoading: true });
+        try {
+          await api.deleteUser(userId);
+          set((state) => ({
+            users: state.users.filter((user) => user.id !== userId && user._id !== userId),
+            usersLoading: false,
+            usersError: null,
+          }));
+          return true;
+        } catch (error) {
+          set({
+            usersError: error.message,
+            usersLoading: false,
+          });
+          console.error('Error deleting user:', error);
+          return false;
+        }
+      },
 
       fetchAccommodations: async (type, page = 1, filters = null) => {
         set({ isLoading: true, currentType: type, currentPage: page });

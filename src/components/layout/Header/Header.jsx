@@ -1,13 +1,12 @@
+import logo from '../../../assets/images/logo.png';
+import cart from '../../../assets/svg/cart.svg';
+import useAccommodationStore from '../../../store/accommodationStore';
+import useAuthStore from '../../../store/authStore';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography, Badge, Drawer } from '@mui/material';
 import { Search, Bookmark, Menu, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
-import logo from '../../../assets/images/logo.png';
-import cart from '../../../assets/svg/cart.svg';
-
 import { Link, useNavigate } from 'react-router-dom';
 
-import useAuthStore from '../../../store/authStore';
-import useAccommodationStore from '../../../store/accommodationStore';
 // In your Header component
 function Header() {
   const { isAuthenticated, logout } = useAuthStore();

@@ -1,6 +1,6 @@
-import { Box, Container, Typography, Grid } from '@mui/material';
 import useAccommodationStore from '../../../store/accommodationStore';
 import CampCard from '../../home/components/campcard/CampCard';
+import { Box, Container, Typography, Grid } from '@mui/material';
 
 const WishlistPage = () => {
   const { wishlist } = useAccommodationStore();

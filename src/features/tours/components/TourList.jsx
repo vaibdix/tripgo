@@ -1,6 +1,6 @@
-import { Box, Grid, Typography, Pagination } from '@mui/material';
 import CampCard from '../../home/components/campcard/CampCard';
 import CampCardSkeleton from '../../home/components/campcard/CampCardSkeleton';
+import { Box, Grid, Typography, Pagination } from '@mui/material';
 
 const TourList = ({ isLoading, accommodations, tentType, currentPage, totalPages, changePage }) => {
   if (isLoading) {

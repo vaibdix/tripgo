@@ -39,6 +39,10 @@
           },
           "email": {
             "type": "string"
+          },
+          "admin": {
+            "type": "boolean",
+            "description": "Indicates if the user has admin privileges"
           }
         }
       },
@@ -58,7 +62,10 @@
       },
       "Accommodation": {
         "type": "object",
-        "required": ["name", "capacity"],
+        "required": [
+          "name",
+          "capacity"
+        ],
         "properties": {
           "id": {
             "type": "integer"
@@ -78,14 +85,20 @@
     "/auth/register": {
       "post": {
         "summary": "Register a new user",
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password", "name"],
+                "required": [
+                  "email",
+                  "password",
+                  "name"
+                ],
                 "properties": {
                   "email": {
                     "type": "string"
@@ -95,6 +108,11 @@
                   },
                   "name": {
                     "type": "string"
+                  },
+                  "admin": {
+                    "type": "boolean",
+                    "description": "Indicates if the user has admin privileges",
+                    "default": false
                   }
                 }
               }
@@ -128,14 +146,19 @@
     "/auth/login": {
       "post": {
         "summary": "Login user",
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "type": "string"
@@ -175,7 +198,9 @@
     "/auth/profile": {
       "get": {
         "summary": "Get user profile",
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -207,12 +232,10 @@
     },
     "/auth/users": {
       "get": {
-        "summary": "Get all users",
-        "tags": ["Authentication"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
+        "summary": "Get all users (no authentication)",
+        "description": "Public endpoint to retrieve all users",
+        "tags": [
+          "Authentication"
         ],
         "responses": {
           "200": {
@@ -228,8 +251,8 @@
               }
             }
           },
-          "401": {
-            "description": "Authentication required",
+          "500": {
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -237,9 +260,32 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/users/all": {
+      "get": {
+        "summary": "Get all users (public)",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
           },
-          "403": {
-            "description": "Invalid or expired token",
+          "500": {
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -254,7 +300,9 @@
     "/{type}": {
       "get": {
         "summary": "Get all items of a specific type",
-        "tags": ["Accommodations"],
+        "tags": [
+          "Accommodations"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -262,7 +310,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["tents", "cottages", "farmhouses", "hotels", "homestays", "treehouses", "villas"]
+              "enum": [
+                "tents",
+                "cottages",
+                "farmhouses",
+                "hotels",
+                "homestays",
+                "treehouses",
+                "villas"
+              ]
             }
           }
         ],
@@ -284,7 +340,9 @@
       },
       "post": {
         "summary": "Create a new item",
-        "tags": ["Accommodations"],
+        "tags": [
+          "Accommodations"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -292,7 +350,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["tents", "cottages", "farmhouses", "hotels", "homestays", "treehouses", "villas"]
+              "enum": [
+                "tents",
+                "cottages",
+                "farmhouses",
+                "hotels",
+                "homestays",
+                "treehouses",
+                "villas"
+              ]
             }
           }
         ],
@@ -323,7 +389,9 @@
     "/{type}/{id}": {
       "get": {
         "summary": "Get a specific item by ID",
-        "tags": ["Accommodations"],
+        "tags": [
+          "Accommodations"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -331,7 +399,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["tents", "cottages", "farmhouses", "hotels", "homestays", "treehouses", "villas"]
+              "enum": [
+                "tents",
+                "cottages",
+                "farmhouses",
+                "hotels",
+                "homestays",
+                "treehouses",
+                "villas"
+              ]
             }
           },
           {
@@ -368,7 +444,9 @@
       },
       "put": {
         "summary": "Update an item",
-        "tags": ["Accommodations"],
+        "tags": [
+          "Accommodations"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -376,7 +454,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["tents", "cottages", "farmhouses", "hotels", "homestays", "treehouses", "villas"]
+              "enum": [
+                "tents",
+                "cottages",
+                "farmhouses",
+                "hotels",
+                "homestays",
+                "treehouses",
+                "villas"
+              ]
             }
           },
           {
@@ -423,7 +509,9 @@
       },
       "delete": {
         "summary": "Delete an item",
-        "tags": ["Accommodations"],
+        "tags": [
+          "Accommodations"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -431,7 +519,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["tents", "cottages", "farmhouses", "hotels", "homestays", "treehouses", "villas"]
+              "enum": [
+                "tents",
+                "cottages",
+                "farmhouses",
+                "hotels",
+                "homestays",
+                "treehouses",
+                "villas"
+              ]
             }
           },
           {

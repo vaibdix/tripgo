@@ -1,6 +1,6 @@
+import useAccommodationStore from '../../../store/accommodationStore';
 import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
 import { Heart, Star } from 'lucide-react';
-import useAccommodationStore from '../../../store/accommodationStore';
 
 const WishlistCard = ({ id, type, campName, location, price, actualPrice, rating, images }) => {
   const { toggleWishlist } = useAccommodationStore();

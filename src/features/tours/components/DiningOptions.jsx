@@ -1,5 +1,5 @@
-import { Box, Typography, Grid, Paper } from '@mui/material';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import { Box, Typography, Grid, Paper } from '@mui/material';
 
 const DiningOptions = ({ foodDining }) => {
   return (

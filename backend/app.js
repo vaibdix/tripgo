@@ -84,7 +84,7 @@ const validateItem = (req, res, next) => {
 
 // User registration endpoint
 app.post("/auth/register", async (req, res) => {
-    const { email, password, name } = req.body;
+    const { email, password, name, admin } = req.body;
 
     if (!email || !password || !name) {
         return res.status(400).json({ error: "All fields are required" });
@@ -106,14 +106,15 @@ app.post("/auth/register", async (req, res) => {
             id: Math.floor(Date.now() / 1000),
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            admin: admin === true // Default to false if not provided
         };
 
         data.users.push(newUser);
         await writeData(DATA_FILES.users, data);
 
         // Create token
-        const token = jwt.sign({ id: newUser.id }, JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign({ id: newUser.id, admin: newUser.admin }, JWT_SECRET, { expiresIn: '24h' });
 
         res.status(201).json({
             message: "User registered successfully",
@@ -121,7 +122,8 @@ app.post("/auth/register", async (req, res) => {
             user: {
                 id: newUser.id,
                 name: newUser.name,
-                email: newUser.email
+                email: newUser.email,
+                admin: newUser.admin
             }
         });
     } catch (err) {
@@ -152,7 +154,7 @@ app.post("/auth/login", async (req, res) => {
         }
 
         // Create token
-        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign({ id: user.id, admin: user.admin }, JWT_SECRET, { expiresIn: '24h' });
 
         res.json({
             message: "Login successful",
@@ -160,7 +162,8 @@ app.post("/auth/login", async (req, res) => {
             user: {
                 id: user.id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                admin: user.admin
             }
         });
     } catch (err) {
@@ -199,24 +202,96 @@ app.get("/auth/profile", authenticateToken, async (req, res) => {
         res.json({
             id: user.id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            admin: user.admin
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-// Protected route to get all users
-app.get("/auth/users", authenticateToken, async (req, res) => {
-    try {
-        const data = await readData(DATA_FILES.users);
-        // Remove password field from each user for security
-        const sanitizedUsers = data.users.map(({ password, ...user }) => user);
-        res.json(sanitizedUsers);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+// Protected route to get all users - removing authentication requirement
+app.get('/auth/users', async (req, res) => {
+  try {
+    const data = await readData(DATA_FILES.users);
+    // Remove password field from each user for security
+    const sanitizedUsers = data.users.map(({ password, ...user }) => user);
+    res.json(sanitizedUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+// Update user endpoint - removing authentication requirement
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, admin } = req.body;
+  
+  try {
+    const data = await readData(DATA_FILES.users);
+    const userIndex = data.users.findIndex(u => u.id === Number(id));
+    
+    if (userIndex === -1) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    // Update user data
+    if (name) data.users[userIndex].name = name;
+    if (email) {
+      // Check if email is already in use by another user
+      const emailExists = data.users.some((u, i) => i !== userIndex && u.email === email);
+      if (emailExists) {
+        return res.status(400).json({ error: "Email already in use" });
+      }
+      data.users[userIndex].email = email;
+    }
+    if (admin !== undefined) data.users[userIndex].admin = Boolean(admin);
+    
+    await writeData(DATA_FILES.users, data);
+    
+    // Return updated user without password
+    const { password, ...updatedUser } = data.users[userIndex];
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete user endpoint - removing authentication requirement
+app.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    const data = await readData(DATA_FILES.users);
+    const userIndex = data.users.findIndex(u => u.id === Number(id));
+    
+    if (userIndex === -1) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    // Remove the user
+    data.users.splice(userIndex, 1);
+    await writeData(DATA_FILES.users, data);
+    
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Route to get all users (public)
+app.get('/users/all', async (req, res) => {
+  try {
+    const data = await readData(DATA_FILES.users);
+    // Remove password field from each user for security
+    const sanitizedUsers = data.users.map(({ password, ...user }) => user);
+    res.json(sanitizedUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 // Generic function for retrieving all items
 app.get("/:type", async (req, res) => {
