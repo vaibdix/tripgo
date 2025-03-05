@@ -1,7 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import useAccommodationStore from '../../../../store/accommodationStore';
 import CampCard from '../campcard/CampCard';
-import { Box, Typography, Container, Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, Typography, Container, Grid, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const NewDestinations = () => {
   const { fetchAccommodations } = useAccommodationStore();
@@ -13,13 +14,11 @@ const NewDestinations = () => {
     const fetchRandomDestinations = async () => {
       try {
         const response = await fetchAccommodations('tents');
-        // Get all accommodations and randomly select 8
         const allAccommodations = response || [];
         const shuffled = [...allAccommodations].sort(() => 0.5 - Math.random());
-        // Add type property to each item
         const destinationsWithType = shuffled.slice(0, 8).map((item) => ({
           ...item,
-          type: 'tents', // Add the type property
+          type: 'tents',
         }));
         setRandomDestinations(destinationsWithType);
       } catch (error) {
@@ -30,6 +29,8 @@ const NewDestinations = () => {
 
     fetchRandomDestinations();
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -66,6 +67,11 @@ const NewDestinations = () => {
           </Grid>
         ))}
       </Grid>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+        <Button sx={{ textDecoration: 'underline', textUnderlineOffset: '4px' }} onClick={() => navigate('/tours')}>
+          View More
+        </Button>
+      </Box>
     </Container>
   );
 };

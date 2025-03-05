@@ -84,6 +84,7 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
             <SwiperSlide key={index}>
               <img
                 src={img}
+                loading='lazy'
                 alt={`Camp view ${index + 1}`}
                 style={{
                   width: '100%',

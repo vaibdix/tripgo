@@ -47,7 +47,7 @@ function Header() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { wishlist, cart } = useAccommodationStore();
-  
+
   // Add this to get a random avatar
   const getRandomAvatar = () => {
     const randomIndex = Math.floor(Math.random() * Avatars.length);
@@ -64,15 +64,15 @@ function Header() {
 
   // Add these state and handlers right after the existing useState declarations
   const [anchorEl, setAnchorEl] = useState(null);
-  
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleLogoutClick = () => {
     handleMenuClose();
     handleLogout();
@@ -116,6 +116,8 @@ function Header() {
             <Link to="/collection">Collection</Link>
             <Link to="/about">About Us</Link>
             <Link to="/contact">Contact</Link>
+            <Link to="/campform">campform</Link>
+
           </Box>
         </Box>
 
@@ -142,8 +144,8 @@ function Header() {
             </Badge>
           </IconButton>
 
-         
-         
+
+
           {isAuthenticated ? (
             <>
               <Button
@@ -166,7 +168,7 @@ function Header() {
                 onClick={handleMenuOpen}
               >
                 <Typography>{user?.name || 'User'}</Typography>
- 
+
                 <Avatar
                   sx={{
                     width: 32,
@@ -197,8 +199,8 @@ function Header() {
                   }
                 }}
               >
-                
-                  <MenuItem 
+
+                  <MenuItem
                     onClick={() => {
                       handleMenuClose();
                       navigate('/admin');
@@ -213,8 +215,8 @@ function Header() {
                   >
                     Admin Dashboard
                   </MenuItem>
-                
-                <MenuItem 
+
+                <MenuItem
                   onClick={handleLogoutClick}
                   sx={{
                     py: 1.5,

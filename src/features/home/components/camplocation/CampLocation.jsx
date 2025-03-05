@@ -93,7 +93,7 @@ function Campaddress() {
           onClick={handleCardClick}
             component="img"
             src={ecoast}
-            alt="E. Coast"
+            alt="Nagpur"
             sx={{
               width: '100%',
               height: '100%',
@@ -112,7 +112,7 @@ function Campaddress() {
             }}
           >
             <Typography variant="subtitle1" fontWeight="medium">
-              E. Coast
+              Nagpur
             </Typography>
           </Box>
         </Box>
@@ -134,7 +134,7 @@ function Campaddress() {
           onClick={handleCardClick}
             component="img"
             src={canada}
-            alt="Canada"
+            alt="Nashik"
             sx={{
               width: '100%',
               height: '100%',
@@ -153,7 +153,7 @@ function Campaddress() {
             }}
           >
             <Typography variant="subtitle1" fontWeight="medium">
-              Canada
+              Nashik
             </Typography>
           </Box>
         </Box>
@@ -176,7 +176,7 @@ function Campaddress() {
           onClick={handleCardClick}
             component="img"
             src={andaman}
-            alt="Andaman"
+            alt="kolhapur"
             sx={{
               width: '100%',
               height: '100%',
@@ -195,7 +195,7 @@ function Campaddress() {
             }}
           >
             <Typography variant="subtitle1" fontWeight="medium">
-              Andaman
+            kolhapur
             </Typography>
           </Box>
         </Box>

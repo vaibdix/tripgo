@@ -1,6 +1,7 @@
 import AdminRoute from '../components/AdminRoute';
 import MainLayout from '../components/MainLayout';
 import Dashboard from '../features/admin/Dashboard';
+import CampForm from '../features/admin/components/inputdata/CampForm';
 import SignIn from '../features/auth/signin/SignIn';
 import SignUp from '../features/auth/signup/SignUp';
 import Cart from '../features/cart/Cart';
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
         path: '/checkout',
         element: <Checkout />,
       },
+      {
+        path: '/campform',
+        element: <CampForm />,
+      }
       // Remove the admin route from MainLayout
     ],
   },
