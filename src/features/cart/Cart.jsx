@@ -155,7 +155,7 @@ const Cart = () => {
                   {/* Image */}
                   <Box
                     component="img"
-                    src={item.about.images[0]}
+                    src={item.images?.[0] || item.about.images[0]} // Changed from item.about.images[0]
                     alt={item.campName}
                     sx={{
                       width: 100,

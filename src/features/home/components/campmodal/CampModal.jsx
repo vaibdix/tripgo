@@ -1,9 +1,23 @@
 import { Box, Typography, IconButton, Modal, Button } from '@mui/material';
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import useAccommodationStore from '../../../../store/accommodationStore';
+import { Heart } from 'lucide-react';
 
 const CampModal = ({ open, handleClose, campData }) => {
   const [selectedImage, setSelectedImage] = useState(0);
+  const { toggleWishlist, isInWishlist, addToCart } = useAccommodationStore();
+  
+  const isWishlisted = isInWishlist(campData?.id);
+
+  const handleWishlistClick = () => {
+    toggleWishlist(campData);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(campData);
+    handleClose();
+  };
 
   return (
     <Modal
@@ -134,23 +148,33 @@ const CampModal = ({ open, handleClose, campData }) => {
             {campData?.location}
           </Typography>
 
+          {/* Update the buttons section */}
           <Box sx={{ mb: 4 }}>
             <Typography variant="body1" sx={{ mb: 2 }}>
               Quantity
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Button variant="outlined" sx={{ minWidth: 120 }}>
+              <Button 
+                variant="outlined" 
+                sx={{ minWidth: 120 }}
+                onClick={handleAddToCart}
+              >
                 Add to cart
               </Button>
               <Button
                 variant="contained"
+                onClick={handleWishlistClick}
                 sx={{
                   minWidth: 120,
-                  bgcolor: 'black',
-                  '&:hover': { bgcolor: '#333' },
+                  bgcolor: isWishlisted ? '#f5f5f5' : 'black',
+                  color: isWishlisted ? 'black' : 'white',
+                  '&:hover': { bgcolor: isWishlisted ? '#e0e0e0' : '#333' },
+                  display: 'flex',
+                  gap: 1,
                 }}
               >
-                Buy it now
+                <Heart size={20} fill={isWishlisted ? 'black' : 'white'} />
+                {isWishlisted ? 'Wishlisted' : 'Wishlist'}
               </Button>
             </Box>
           </Box>

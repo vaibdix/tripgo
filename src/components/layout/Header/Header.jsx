@@ -1,33 +1,81 @@
+import boy1 from '../../../assets/images/boy1.png';
+import boy2 from '../../../assets/images/boy2.png';
+import boy3 from '../../../assets/images/boy3.png';
+import boy4 from '../../../assets/images/boy4.png';
+import boy5 from '../../../assets/images/boy5.png';
+import boy6 from '../../../assets/images/boy6.png';
+import boy7 from '../../../assets/images/boy7.png';
+import boy8 from '../../../assets/images/boy8.png';
+import boy9 from '../../../assets/images/boy9.png';
+import girl1 from '../../../assets/images/girl1.png';
+import girl2 from '../../../assets/images/girl2.png';
+import girl3 from '../../../assets/images/girl3.png';
+import girl4 from '../../../assets/images/girl4.png';
+import girl5 from '../../../assets/images/girl5.png';
 import logo from '../../../assets/images/logo.png';
-import cart from '../../../assets/svg/cart.svg';
 import useAccommodationStore from '../../../store/accommodationStore';
 import useAuthStore from '../../../store/authStore';
-import { AppBar, Box, Button, IconButton, Toolbar, Typography, Badge, Drawer } from '@mui/material';
-import { Search, Bookmark, Menu, ShoppingBag } from 'lucide-react';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography, Badge, Drawer, Avatar, Menu, MenuItem } from '@mui/material';
+import { Search, Bookmark, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
+const Avatars = [
+  boy1,
+  boy2,
+  boy3,
+  boy4,
+  boy5,
+  boy6,
+  boy7,
+  boy8,
+  boy9,
+  girl1,
+  girl2,
+  girl3,
+  girl4,
+  girl5,
+];
+
+
+
 // In your Header component
 function Header() {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout, user } = useAuthStore();
+  // console.log('User:', user); // Add this line to check user data
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { wishlist, cart } = useAccommodationStore();
-
-  // Remove this section as it's outside the return statement
-  // <IconButton onClick={() => navigate('/cart')} sx={{ backgroundColor: '#F5F1EE' }}>
-  //   <Badge badgeContent={cart.length} color="warning" sx={{ border: '1px solid #F5F1EE' }}>
-  //     <ShoppingBag size={28} color="#101F37" />
-  //   </Badge>
-  // </IconButton>;
+  
+  // Add this to get a random avatar
+  const getRandomAvatar = () => {
+    const randomIndex = Math.floor(Math.random() * Avatars.length);
+    return Avatars[randomIndex];
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  // Add these state and handlers right after the existing useState declarations
+  const [anchorEl, setAnchorEl] = useState(null);
+  
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const handleLogoutClick = () => {
+    handleMenuClose();
+    handleLogout();
   };
 
   return (
@@ -65,7 +113,7 @@ function Header() {
           >
             <Link to="/">Home</Link>
             <Link to="/tours">Tours</Link>
-            <Link to="/prices">Collection</Link>
+            <Link to="/collection">Collection</Link>
             <Link to="/about">About Us</Link>
             <Link to="/contact">Contact</Link>
           </Box>
@@ -94,20 +142,92 @@ function Header() {
             </Badge>
           </IconButton>
 
+         
+         
           {isAuthenticated ? (
-            <Button
-              onClick={handleLogout}
-              sx={{
-                borderRadius: 28,
-                px: 3,
-                py: 1,
-                color: 'black',
-                backgroundColor: '#f9f7f4',
-                fontWeight: 'semibold',
-              }}
-            >
-              Logout
-            </Button>
+            <>
+              <Button
+                sx={{
+                  borderRadius: 28,
+                  px: 2,
+                  py: 0.5,
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontWeight: 'medium',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  textTransform: 'none',
+                  border: '1px solid #e0e0e0',
+                  '&:hover': {
+                    backgroundColor: '#f5f5f5',
+                  }
+                }}
+                onClick={handleMenuOpen}
+              >
+                <Typography>{user?.name || 'User'}</Typography>
+ 
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    backgroundColor: '#f5f5f5',
+                  }}
+                  alt={user?.name || 'User Avatar'}
+                  src={user?.avatar || getRandomAvatar()}
+                />
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                PaperProps={{
+                  sx: {
+                    mt: 1,
+                    minWidth: 180,
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+                  }
+                }}
+              >
+                
+                  <MenuItem 
+                    onClick={() => {
+                      handleMenuClose();
+                      navigate('/admin');
+                    }}
+                    sx={{
+                      py: 1.5,
+                      px: 2.5,
+                      '&:hover': {
+                        backgroundColor: '#f5f5f5',
+                      }
+                    }}
+                  >
+                    Admin Dashboard
+                  </MenuItem>
+                
+                <MenuItem 
+                  onClick={handleLogoutClick}
+                  sx={{
+                    py: 1.5,
+                    px: 2.5,
+                    '&:hover': {
+                      backgroundColor: '#f5f5f5',
+                    }
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
           ) : (
             <Button
               component={Link}
@@ -125,11 +245,8 @@ function Header() {
             </Button>
           )}
 
-          {/* mobile menu button */}
         </Box>
       </Toolbar>
-
-      {/* Mobile Navigation Drawer */}
       <Drawer
         variant="temporary"
         anchor="right"

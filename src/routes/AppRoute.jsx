@@ -5,6 +5,7 @@ import SignIn from '../features/auth/signin/SignIn';
 import SignUp from '../features/auth/signup/SignUp';
 import Cart from '../features/cart/Cart';
 import Checkout from '../features/checkout/Checkout';
+import Collection from '../features/collection/Collection';
 import Contact from '../features/contact/Contact';
 import Home from '../features/home/Home';
 import Tours from '../features/tours/Tours';
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: '/contact',
         element: <Contact />,
+      },
+      {
+        path: '/collection',
+        element: <Collection />
       },
       {
         path: '/login',

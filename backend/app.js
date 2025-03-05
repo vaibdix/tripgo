@@ -26,7 +26,7 @@ const DATA_FILES = {
     farmhouses: path.join(__dirname, "./data/farmhouses.json"),
     hotels: path.join(__dirname, "./data/hotels.json"),
     homestays: path.join(__dirname, "./data/homestays.json"),
-    treehouses: path.join(__dirname, "./data/treehouses.json"),
+    treehouses: path.join(__dirname, "./data/treehouse.json"),
     villas: path.join(__dirname, "./data/villas.json"),
 };
 

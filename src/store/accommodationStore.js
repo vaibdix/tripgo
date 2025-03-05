@@ -2,6 +2,7 @@ import { api } from './Api';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+
 const ITEMS_PER_PAGE = 12;
 
 // Helper function moved outside the store
@@ -352,14 +353,26 @@ const useAccommodationStore = create(
 
       addToCart: (item) => {
         set((state) => {
-          const existingItem = state.cart.find((cartItem) => cartItem.id === item.id);
+          // Ensure item has all required properties
+          const formattedItem = {
+            id: item.id,
+            campName: item.campName || 'Unnamed Camp',
+            price: item.price || 0,
+            actualPrice: item.actualPrice || 0,
+            location: item.location || 'Unknown Location',
+            images: item.images || [],
+            type: item.type || 'unknown',
+            ...item // Keep any additional properties
+          };
+
+          const existingItem = state.cart.find((cartItem) => cartItem.id === formattedItem.id);
           const newCart = existingItem
             ? state.cart.map((cartItem) =>
-                cartItem.id === item.id
+                cartItem.id === formattedItem.id
                   ? { ...cartItem, quantity: cartItem.quantity + 1 }
                   : cartItem
               )
-            : [...state.cart, { ...item, quantity: 1 }];
+            : [...state.cart, { ...formattedItem, quantity: 1 }];
 
           // Save to localStorage
           localStorage.setItem('cart', JSON.stringify(newCart));
@@ -396,10 +409,63 @@ const useAccommodationStore = create(
 
       getCartTotal: () => {
         const state = get();
-        return state.cart.reduce(
-          (total, item) => total + item.prices.afterDiscount * item.quantity,
-          0
-        );
+        return state.cart.reduce((total, item) => {
+          // Handle both data structures (direct price and prices object)
+          const price = item.prices?.afterDiscount || item.price || 0;
+          return total + price * item.quantity;
+        }, 0);
+      },
+
+      fetchcardAccommodations: async () => {
+        set({ isLoading: true });
+        try {
+          // Fetch all types of accommodations
+          const responses = await Promise.all([
+            api.fetchtents(),
+            api.fetchcottages(),
+            api.fetchfarmhouses(),
+            api.fetchhotels(),
+            api.fetchtreehouses(),
+            api.fetchhomestays(),
+            api.fetchvillas(),
+          ]);
+
+          // Ensure each response has data and combine all data
+          const allAccommodations = responses.reduce((acc, response) => {
+            if (response && response.data) {
+              return [...acc, ...response.data];
+            }
+            return acc;
+          }, []);
+
+          // Group accommodations by district
+          const accommodationsByDistrict = allAccommodations.reduce((acc, item) => {
+            if (item && item.address && item.address.dist) {
+              const district = item.address.dist.toLowerCase();
+              if (!acc[district]) {
+                acc[district] = [];
+              }
+              acc[district].push(item);
+            }
+            return acc;
+          }, {});
+
+          set({ 
+            accommodations: allAccommodations,
+            accommodationsByDistrict,
+            isLoading: false,
+            error: null 
+          });
+
+          return accommodationsByDistrict;
+        } catch (error) {
+          console.error('Error fetching accommodations:', error);
+          set({
+            error: error.message || 'Failed to fetch accommodations',
+            isLoading: false
+          });
+          return {};
+        }
       },
     }),
     {
