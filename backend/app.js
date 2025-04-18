@@ -15,7 +15,7 @@ const theme = new SwaggerTheme();
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // In production, use environment variable
 
 // Define file paths centrally
@@ -92,7 +92,7 @@ app.post("/auth/register", async (req, res) => {
 
     try {
         const data = await readData(DATA_FILES.users);
-        
+
         // Check if user already exists
         if (data.users.some(user => user.email === email)) {
             return res.status(400).json({ error: "User already exists" });
@@ -194,7 +194,7 @@ app.get("/auth/profile", authenticateToken, async (req, res) => {
     try {
         const data = await readData(DATA_FILES.users);
         const user = data.users.find(u => u.id === req.user.id);
-        
+
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
@@ -226,15 +226,15 @@ app.get('/auth/users', async (req, res) => {
 app.put('/users/:id', async (req, res) => {
   const { id } = req.params;
   const { name, email, admin } = req.body;
-  
+
   try {
     const data = await readData(DATA_FILES.users);
     const userIndex = data.users.findIndex(u => u.id === Number(id));
-    
+
     if (userIndex === -1) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     // Update user data
     if (name) data.users[userIndex].name = name;
     if (email) {
@@ -246,9 +246,9 @@ app.put('/users/:id', async (req, res) => {
       data.users[userIndex].email = email;
     }
     if (admin !== undefined) data.users[userIndex].admin = Boolean(admin);
-    
+
     await writeData(DATA_FILES.users, data);
-    
+
     // Return updated user without password
     const { password, ...updatedUser } = data.users[userIndex];
     res.json(updatedUser);
@@ -260,19 +260,19 @@ app.put('/users/:id', async (req, res) => {
 // Delete user endpoint - removing authentication requirement
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
-  
+
   try {
     const data = await readData(DATA_FILES.users);
     const userIndex = data.users.findIndex(u => u.id === Number(id));
-    
+
     if (userIndex === -1) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     // Remove the user
     data.users.splice(userIndex, 1);
     await writeData(DATA_FILES.users, data);
-    
+
     res.json({ message: "User deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

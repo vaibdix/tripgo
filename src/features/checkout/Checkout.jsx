@@ -345,7 +345,7 @@ const Checkout = () => {
                         </Typography>
                       </Box>
                       <Typography sx={{ fontWeight: 500 }}>
-                        ₹{item.prices.afterDiscount * item.quantity}
+                        ₹{(item.prices?.afterDiscount || item.price || 0) * (item.quantity || 1)}
                       </Typography>
                     </Box>
                   ))}

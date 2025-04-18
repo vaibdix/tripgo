@@ -220,19 +220,6 @@ const ToursAdmin = () => {
             }}
           />
         </Box>
-
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenNewDialog}
-          sx={{
-            bgcolor: accentColor,
-            '&:hover': { bgcolor: accentColor, filter: 'brightness(0.9)' },
-            textTransform: 'none',
-          }}
-        >
-          Add New Tour
-        </Button>
       </Box>
 
       <Paper

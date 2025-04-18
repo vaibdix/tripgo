@@ -351,17 +351,30 @@ const useAccommodationStore = create(
       // Initialize cart from localStorage
       cart: JSON.parse(localStorage.getItem('cart')) || [],
 
+      getCartTotal: () => {
+        const state = get();
+        return state.cart.reduce((total, item) => {
+          const itemPrice = item.prices?.afterDiscount || item.price || 0;
+          return total + (itemPrice * (item.quantity || 1));
+        }, 0);
+      },
+
       addToCart: (item) => {
         set((state) => {
-          // Ensure item has all required properties
+          // Ensure item has all required properties including proper price structure
           const formattedItem = {
-            id: item.id,
+            id: item.id || item._id,
             campName: item.campName || 'Unnamed Camp',
-            price: item.price || 0,
-            actualPrice: item.actualPrice || 0,
+            prices: {
+              afterDiscount: item.prices?.afterDiscount || item.price || 0,
+              actualPrice: item.prices?.actualPrice || item.actualPrice || 0
+            },
+            price: item.prices?.afterDiscount || item.price || 0, // Fallback price
             location: item.location || 'Unknown Location',
-            images: item.images || [],
+            images: item.images || item.about?.images || [],
             type: item.type || 'unknown',
+            suitableFor: item.suitableFor || 'Not specified',
+            quantity: 1,
             ...item // Keep any additional properties
           };
 
@@ -372,20 +385,11 @@ const useAccommodationStore = create(
                   ? { ...cartItem, quantity: cartItem.quantity + 1 }
                   : cartItem
               )
-            : [...state.cart, { ...formattedItem, quantity: 1 }];
+            : [...state.cart, formattedItem];
 
           // Save to localStorage
           localStorage.setItem('cart', JSON.stringify(newCart));
 
-          return { cart: newCart };
-        });
-      },
-
-      removeFromCart: (itemId) => {
-        set((state) => {
-          const newCart = state.cart.filter((item) => item.id !== itemId);
-          // Save to localStorage
-          localStorage.setItem('cart', JSON.stringify(newCart));
           return { cart: newCart };
         });
       },
@@ -395,25 +399,22 @@ const useAccommodationStore = create(
           const newCart = state.cart.map((item) =>
             item.id === itemId ? { ...item, quantity } : item
           );
-          // Save to localStorage
+          localStorage.setItem('cart', JSON.stringify(newCart));
+          return { cart: newCart };
+        });
+      },
+
+      removeFromCart: (itemId) => {
+        set((state) => {
+          const newCart = state.cart.filter((item) => item.id !== itemId);
           localStorage.setItem('cart', JSON.stringify(newCart));
           return { cart: newCart };
         });
       },
 
       clearCart: () => {
-        // Clear both state and localStorage
         localStorage.removeItem('cart');
         set({ cart: [] });
-      },
-
-      getCartTotal: () => {
-        const state = get();
-        return state.cart.reduce((total, item) => {
-          // Handle both data structures (direct price and prices object)
-          const price = item.prices?.afterDiscount || item.price || 0;
-          return total + price * item.quantity;
-        }, 0);
       },
 
       fetchcardAccommodations: async () => {

@@ -193,7 +193,7 @@ const Cart = () => {
                     </Typography>
 
                     {/* Mobile only price */}
-                    <Typography
+                   <Typography
                       variant="body2"
                       sx={{
                         mt: 1.5,
@@ -201,7 +201,7 @@ const Cart = () => {
                         display: { xs: 'block', md: 'none' },
                       }}
                     >
-                      ₹{item.prices.afterDiscount}
+                      ₹{item.prices?.afterDiscount || item.price || 0}
                     </Typography>
                   </Box>
                 </Box>
@@ -294,7 +294,7 @@ const Cart = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Typography
+                   <Typography
                     variant="subtitle1"
                     sx={{
                       fontWeight: 500,
@@ -302,7 +302,7 @@ const Cart = () => {
                       flexGrow: 1,
                     }}
                   >
-                    ₹{item.prices.afterDiscount * item.quantity}
+                    ₹{(item.prices?.afterDiscount || item.price || 0) * item.quantity}
                   </Typography>
                 </Box>
                 <Button

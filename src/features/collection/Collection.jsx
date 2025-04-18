@@ -65,9 +65,9 @@ const Collection = () => {
     >
       {properties.map((property, index) => (
         <CampCard
-          key={`${property.type || 'unknown'}-${property.id || index}`}
-          id={property.id}
-          type={property.type || 'Unknown Type'}
+          key={`${property.type || 'unknown'}-${property._id || property.id || index}`}
+          id={property._id || property.id}
+          type={property.type}
           campName={property.campName}
           location={`${property.address?.village || ''}, ${property.address?.dist || ''}`}
           price={property.prices?.afterDiscount}
