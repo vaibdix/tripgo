@@ -26,7 +26,6 @@ export default function Hero() {
               }}
             >
               <Typography variant="h3" fontWeight="normal" color="black">
-                {/* Gear up for Great Outdoors® */}
                 GEAR UP FOR GREAT OUTDOORS®
               </Typography>
             </Box>

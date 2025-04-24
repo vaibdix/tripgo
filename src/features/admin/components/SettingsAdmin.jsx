@@ -12,45 +12,32 @@ import {
   Button,
   Divider,
   Paper,
-  // Remove the useTheme import from MUI to avoid conflict
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const SettingsAdmin = () => {
-  // Use the renamed import
   const { darkMode, toggleDarkMode, accentColor, setAccentColor } = useCustomTheme();
-
-  // Add state to track selected color before saving
   const [selectedColor, setSelectedColor] = useState(accentColor);
-
-  // Add state for additional settings
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [autoSaveInterval, setAutoSaveInterval] = useState(5);
   const [language, setLanguage] = useState('english');
   const [dataRefreshRate, setDataRefreshRate] = useState(30);
   const [compactView, setCompactView] = useState(false);
-
-  // Add translation hook
   const { t, i18n } = useTranslation();
 
-  // Handle color selection
   const handleColorSelect = (color) => {
     setSelectedColor(color);
   };
 
-  // Handle language change with immediate effect
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang);
     console.log(`Language changed to ${lang}`);
   };
 
-  // Handle save settings
   const handleSaveSettings = () => {
-    // Update the accent color in context
     setAccentColor(selectedColor);
-    // Here you would save other settings to localStorage or backend
     console.log('Saving settings:', {
       darkMode,
       accentColor: selectedColor,
@@ -61,11 +48,9 @@ const SettingsAdmin = () => {
       compactView,
     });
 
-    // Show a success message (you could use a snackbar here)
     alert(`${t('settings.saveSuccess')} ${language}`);
   };
 
-  // Set initial language from state
   useEffect(() => {
     i18n.changeLanguage(language);
   }, []);
@@ -78,7 +63,6 @@ const SettingsAdmin = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          {/* Appearance section */}
           <Paper
             sx={{
               borderRadius: 2,
@@ -99,7 +83,11 @@ const SettingsAdmin = () => {
                 {t('settings.appearance.description')}
               </Typography>
             </Box>
-            <Divider sx={{ borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+            <Divider
+              sx={{
+                borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              }}
+            />
             <Box sx={{ p: 3 }}>
               <Grid container alignItems="center" spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -174,7 +162,14 @@ const SettingsAdmin = () => {
                         mr: 2,
                       }}
                     >
-                      <Box sx={{ width: 20, height: 20, borderRadius: '50%', bgcolor: '#fff' }} />
+                      <Box
+                        sx={{
+                          width: 20,
+                          height: 20,
+                          borderRadius: '50%',
+                          bgcolor: '#fff',
+                        }}
+                      />
                     </Box>
                     <Box>
                       <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
@@ -192,7 +187,12 @@ const SettingsAdmin = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Box
-                    sx={{ display: 'flex', justifyContent: 'flex-end', flexWrap: 'wrap', gap: 1 }}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      flexWrap: 'wrap',
+                      gap: 1,
+                    }}
                   >
                     {[
                       '#7C3AED', // Purple (Default)
@@ -251,7 +251,11 @@ const SettingsAdmin = () => {
                 {t('settings.themePreview.description')}
               </Typography>
             </Box>
-            <Divider sx={{ borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+            <Divider
+              sx={{
+                borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              }}
+            />
             <Box sx={{ p: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -317,7 +321,11 @@ const SettingsAdmin = () => {
                 {t('settings.dataPerformance.description')}
               </Typography>
             </Box>
-            <Divider sx={{ borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+            <Divider
+              sx={{
+                borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              }}
+            />
             <Box sx={{ p: 3 }}>
               <Grid container alignItems="center" spacing={3}>
                 <Grid item xs={12} sm={6}>
@@ -456,7 +464,10 @@ const SettingsAdmin = () => {
               {t('settings.language.title')}
             </Typography>
             <Divider
-              sx={{ mb: 2, borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }}
+              sx={{
+                mb: 2,
+                borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              }}
             />
 
             <Box sx={{ mb: 3 }}>
@@ -486,13 +497,10 @@ const SettingsAdmin = () => {
                 ))}
               </Box>
             </Box>
-
-            {/* Continue with the rest of your component */}
           </Paper>
         </Grid>
       </Grid>
 
-      {/* Add Save Settings Button */}
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           variant="contained"

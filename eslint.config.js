@@ -11,8 +11,8 @@ export default [
 		languageOptions: {
 			ecmaVersion: 2020,
 			globals: {
-				...globals.browser, // Keep the browser globals
-				process: "readonly", // Add process as readonly global
+				...globals.browser,
+				process: "readonly", 
 			},
 			parserOptions: {
 				ecmaVersion: "latest",

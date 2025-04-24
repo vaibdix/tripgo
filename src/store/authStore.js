@@ -10,7 +10,6 @@ const getInitialState = () => {
       const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
       const user = userStr ? JSON.parse(userStr) : null;
       if (user) {
-        // Make sure admin status is properly typed as boolean
         return {
           user: { ...user, admin: !!user.admin },
           isAuthenticated: true,
@@ -35,7 +34,6 @@ const useAuthStore = create(
         const response = await api.login(credentials);
         const { token, user } = response.data;
 
-        // Ensure admin is properly typed as boolean
         const userData = { ...user, admin: !!user.admin };
 
         if (credentials.rememberMe) {
@@ -67,8 +65,6 @@ const useAuthStore = create(
     },
 
     initAuth: () => {
-      // This function now just returns whether auth is already initialized
-      // since we initialize on store creation
       return initialState.isAuthenticated;
     },
   }))

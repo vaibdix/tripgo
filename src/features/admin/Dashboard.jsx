@@ -53,10 +53,8 @@ const DashboardContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Get user data from auth store
   const { user, logout } = useAuthStore();
 
-  // Get theme from context - add accentColor here
   const { darkMode, accentColor, toggleDarkMode } = useTheme();
 
   const handleDrawerToggle = () => {
@@ -80,7 +78,6 @@ const DashboardContent = () => {
     navigate('/login', { replace: true });
   };
 
-  // Create profile menu component
   const profileMenu = (
     <Menu
       anchorEl={anchorEl}

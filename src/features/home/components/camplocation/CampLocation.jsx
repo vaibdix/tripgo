@@ -32,7 +32,14 @@ function Campaddress() {
         />
       </Typography>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' }, gap: 3, mt: 4 }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' },
+          gap: 3,
+          mt: 4,
+        }}
+      >
         {/* Pune Card */}
         <Box
           onClick={handleCardClick}
@@ -90,7 +97,7 @@ function Campaddress() {
           }}
         >
           <Box
-          onClick={handleCardClick}
+            onClick={handleCardClick}
             component="img"
             src={ecoast}
             alt="Nagpur"
@@ -131,7 +138,7 @@ function Campaddress() {
           }}
         >
           <Box
-          onClick={handleCardClick}
+            onClick={handleCardClick}
             component="img"
             src={canada}
             alt="Nashik"
@@ -173,7 +180,7 @@ function Campaddress() {
           }}
         >
           <Box
-          onClick={handleCardClick}
+            onClick={handleCardClick}
             component="img"
             src={andaman}
             alt="kolhapur"
@@ -195,7 +202,7 @@ function Campaddress() {
             }}
           >
             <Typography variant="subtitle1" fontWeight="medium">
-            kolhapur
+              kolhapur
             </Typography>
           </Box>
         </Box>

@@ -1,7 +1,7 @@
 import useAccommodationStore from '../../store/accommodationStore';
-import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
 import CampCard from '../home/components/campcard/CampCard';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 function TabPanel({ children, value, index }) {
   return (
@@ -18,7 +18,7 @@ const Collection = () => {
     pune: [],
     nagpur: [],
     nashik: [],
-    kolhapur: []
+    kolhapur: [],
   });
 
   const handleChange = (event, newValue) => {
@@ -32,9 +32,7 @@ const Collection = () => {
   useEffect(() => {
     if (accommodations.length > 0) {
       const locations = {
-        pune: accommodations.filter(
-          (property) => property.address?.dist?.toLowerCase() === 'pune'
-        ),
+        pune: accommodations.filter((property) => property.address?.dist?.toLowerCase() === 'pune'),
         nagpur: accommodations.filter(
           (property) => property.address?.dist?.toLowerCase() === 'nagpur'
         ),
@@ -43,7 +41,7 @@ const Collection = () => {
         ),
         kolhapur: accommodations.filter(
           (property) => property.address?.dist?.toLowerCase() === 'kolhapur'
-        )
+        ),
       };
       setLocationData(locations);
     }
@@ -82,17 +80,18 @@ const Collection = () => {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs 
-          value={value} 
-          onChange={handleChange} 
+        <Tabs
+          value={value}
+          onChange={handleChange}
           centered
           sx={{
             '& .MuiTab-root': {
               fontSize: '1.1rem',
               fontWeight: 500,
               textTransform: 'none',
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', // Added system font fallback
-            }
+              fontFamily:
+                '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', // Added system font fallback
+            },
           }}
         >
           <Tab label="Pune" />
@@ -103,10 +102,14 @@ const Collection = () => {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <Typography variant="h6" sx={{ 
-          mb: 2,
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' // Added system font fallback
-        }}>
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 2,
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', // Added system font fallback
+          }}
+        >
           Pune Properties ({locationData.pune.length})
         </Typography>
         {renderProperties(locationData.pune)}

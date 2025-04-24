@@ -23,7 +23,6 @@ const AccommodationFilters = ({
 }) => {
   return (
     <Grid container spacing={4} sx={{ marginTop: '0.5rem' }}>
-      {/* Price Range Section */}
       <Grid item xs={12} md={3}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Price Range

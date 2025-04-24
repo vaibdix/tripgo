@@ -123,7 +123,6 @@ const MobileImageBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-// Update in both desktop and mobile layouts
 const NordicSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -272,7 +271,7 @@ const NordicSection = () => {
             padding: 2,
             borderRadius: '15px',
             bgcolor: '#F8F8F8',
-            color: 'black', // Changed to black for better contrast
+            color: 'black',
           }}
         >
           <Typography variant="overline">/02</Typography>
@@ -288,7 +287,7 @@ const NordicSection = () => {
             padding: 2,
             borderRadius: '15px',
             bgcolor: '#F8F8F8',
-            color: 'black', // Changed to black for better contrast
+            color: 'black',
           }}
         >
           <Typography variant="overline">/03</Typography>

@@ -24,18 +24,11 @@ const SignIn = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const initAuth = useAuthStore((state) => state.initAuth);
   const navigate = useNavigate();
-
-  // Add a ref to track if auth check has been performed
   const authCheckPerformed = useRef(false);
 
-  // Check for existing auth on component mount
   useEffect(() => {
-    // Only run this once
     if (!authCheckPerformed.current) {
-      // Try to restore authentication state
       const authRestored = initAuth();
-
-      // If authentication was restored, redirect to home
       if (authRestored || isAuthenticated) {
         navigate('/');
       }
@@ -59,7 +52,6 @@ const SignIn = () => {
       ...prev,
       [name]: name === 'rememberMe' ? checked : value,
     }));
-    // Clear error when user starts typing
     if (error) setError(null);
   };
 

@@ -16,7 +16,6 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Add type to the props
 const CampCard = ({ id, type, campName, location, price, actualPrice, rating, images }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,7 +33,7 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
   };
 
   const handlePlusClick = (e) => {
-    e.stopPropagation(); // Prevent card click event
+    e.stopPropagation();
     setModalOpen(true);
   };
 
@@ -84,7 +83,7 @@ const CampCard = ({ id, type, campName, location, price, actualPrice, rating, im
             <SwiperSlide key={index}>
               <img
                 src={img}
-                loading='lazy'
+                loading="lazy"
                 alt={`Camp view ${index + 1}`}
                 style={{
                   width: '100%',

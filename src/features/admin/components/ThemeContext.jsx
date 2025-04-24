@@ -4,7 +4,6 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
-    // Check if there's a saved preference in localStorage
     const savedMode = localStorage.getItem('darkMode');
     return savedMode ? JSON.parse(savedMode) : true; // Default to dark mode
   });
@@ -15,12 +14,10 @@ export const ThemeProvider = ({ children }) => {
     return savedColor || '#7C3AED'; // Default purple
   });
 
-  // Save to localStorage whenever the theme changes
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
-  // Save accentColor to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('accentColor', accentColor);
   }, [accentColor]);
@@ -36,7 +33,6 @@ export const ThemeProvider = ({ children }) => {
         toggleDarkMode,
         accentColor,
         setAccentColor,
-        // Add theme colors for dark mode based on the image
         colors: {
           background: darkMode ? '#0F1117' : '#F8F9FC',
           paper: darkMode ? '#222427' : '#FFFFFF',

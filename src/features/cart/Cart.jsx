@@ -91,9 +91,7 @@ const Cart = () => {
         </Typography>
 
         <Grid container spacing={4}>
-          {/* Cart Items Section */}
           <Grid item xs={12} md={8}>
-            {/* Cart header */}
             <Box
               sx={{
                 display: { xs: 'none', md: 'grid' },
@@ -155,7 +153,7 @@ const Cart = () => {
                   {/* Image */}
                   <Box
                     component="img"
-                    src={item.images?.[0] || item.about.images[0]} // Changed from item.about.images[0]
+                    src={item.images?.[0] || item.about.images[0]}
                     alt={item.campName}
                     sx={{
                       width: 100,
@@ -193,7 +191,7 @@ const Cart = () => {
                     </Typography>
 
                     {/* Mobile only price */}
-                   <Typography
+                    <Typography
                       variant="body2"
                       sx={{
                         mt: 1.5,
@@ -294,7 +292,7 @@ const Cart = () => {
                     alignItems: 'center',
                   }}
                 >
-                   <Typography
+                  <Typography
                     variant="subtitle1"
                     sx={{
                       fontWeight: 500,
@@ -317,7 +315,6 @@ const Cart = () => {
               </Box>
             ))}
 
-            {/* Continue Shopping Button */}
             <Button
               startIcon={<ArrowBack />}
               variant="text"
@@ -339,7 +336,6 @@ const Cart = () => {
             </Button>
           </Grid>
 
-          {/* Order Summary Section */}
           <Grid item xs={12} md={4}>
             <Box sx={{ pl: 4 }}>
               <Typography

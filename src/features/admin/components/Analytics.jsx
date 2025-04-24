@@ -79,7 +79,6 @@ const Analytics = () => {
           villas: villas.length,
         };
 
-        // Generate mock booking data (in a real app, this would come from the API)
         const bookings = generateMockBookingData();
         const revenue = generateMockRevenueData();
 

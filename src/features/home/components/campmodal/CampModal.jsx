@@ -1,13 +1,13 @@
+import useAccommodationStore from '../../../../store/accommodationStore';
 import { Box, Typography, IconButton, Modal, Button } from '@mui/material';
 import { X } from 'lucide-react';
-import { useState } from 'react';
-import useAccommodationStore from '../../../../store/accommodationStore';
 import { Heart } from 'lucide-react';
+import { useState } from 'react';
 
 const CampModal = ({ open, handleClose, campData }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const { toggleWishlist, isInWishlist, addToCart } = useAccommodationStore();
-  
+
   const isWishlisted = isInWishlist(campData?.id);
 
   const handleWishlistClick = () => {
@@ -154,11 +154,7 @@ const CampModal = ({ open, handleClose, campData }) => {
               Quantity
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Button 
-                variant="outlined" 
-                sx={{ minWidth: 120 }}
-                onClick={handleAddToCart}
-              >
+              <Button variant="outlined" sx={{ minWidth: 120 }} onClick={handleAddToCart}>
                 Add to cart
               </Button>
               <Button

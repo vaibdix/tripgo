@@ -11,7 +11,6 @@ const RandomDestinations = () => {
     const fetchRandomDestinations = async () => {
       try {
         const response = await fetchAccommodations('tents');
-        // Get all accommodations and randomly select 8
         const allAccommodations = response || [];
         const shuffled = [...allAccommodations].sort(() => 0.5 - Math.random());
         setRandomDestinations(shuffled.slice(0, 4));

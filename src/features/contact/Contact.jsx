@@ -63,7 +63,7 @@ const Contact = () => {
     <>
       <Container
         maxWidth="xl"
-        disableGutters // Add this prop
+        disableGutters
         sx={{
           display: 'flex',
           minHeight: '90vh',

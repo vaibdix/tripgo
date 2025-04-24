@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import useAccommodationStore from '../../../../store/accommodationStore';
 import CampCard from '../campcard/CampCard';
 import { Box, Typography, Container, Grid, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NewDestinations = () => {
   const { fetchAccommodations } = useAccommodationStore();
@@ -56,7 +56,7 @@ const NewDestinations = () => {
           <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
             <CampCard
               id={item.id}
-              type={item.type} // Add the type prop
+              type={item.type}
               campName={item.campName}
               location={item.address.tal}
               price={item.prices.afterDiscount}
@@ -68,7 +68,10 @@ const NewDestinations = () => {
         ))}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-        <Button sx={{ textDecoration: 'underline', textUnderlineOffset: '4px' }} onClick={() => navigate('/tours')}>
+        <Button
+          sx={{ textDecoration: 'underline', textUnderlineOffset: '4px' }}
+          onClick={() => navigate('/tours')}
+        >
           View More
         </Button>
       </Box>

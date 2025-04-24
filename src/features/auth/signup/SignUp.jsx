@@ -67,12 +67,10 @@ const SignUp = () => {
       const response = await api.register(formData);
 
       if (response.data) {
-        // Store the token if provided
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
         }
 
-        // Redirect to login page after successful registration
         navigate('/login');
       }
     } catch (err) {

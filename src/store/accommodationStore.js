@@ -2,7 +2,6 @@ import { api } from './Api';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-
 const ITEMS_PER_PAGE = 12;
 
 // Helper function moved outside the store
@@ -355,7 +354,7 @@ const useAccommodationStore = create(
         const state = get();
         return state.cart.reduce((total, item) => {
           const itemPrice = item.prices?.afterDiscount || item.price || 0;
-          return total + (itemPrice * (item.quantity || 1));
+          return total + itemPrice * (item.quantity || 1);
         }, 0);
       },
 
@@ -367,7 +366,7 @@ const useAccommodationStore = create(
             campName: item.campName || 'Unnamed Camp',
             prices: {
               afterDiscount: item.prices?.afterDiscount || item.price || 0,
-              actualPrice: item.prices?.actualPrice || item.actualPrice || 0
+              actualPrice: item.prices?.actualPrice || item.actualPrice || 0,
             },
             price: item.prices?.afterDiscount || item.price || 0, // Fallback price
             location: item.location || 'Unknown Location',
@@ -375,7 +374,7 @@ const useAccommodationStore = create(
             type: item.type || 'unknown',
             suitableFor: item.suitableFor || 'Not specified',
             quantity: 1,
-            ...item // Keep any additional properties
+            ...item, // Keep any additional properties
           };
 
           const existingItem = state.cart.find((cartItem) => cartItem.id === formattedItem.id);
@@ -451,11 +450,11 @@ const useAccommodationStore = create(
             return acc;
           }, {});
 
-          set({ 
+          set({
             accommodations: allAccommodations,
             accommodationsByDistrict,
             isLoading: false,
-            error: null 
+            error: null,
           });
 
           return accommodationsByDistrict;
@@ -463,7 +462,7 @@ const useAccommodationStore = create(
           console.error('Error fetching accommodations:', error);
           set({
             error: error.message || 'Failed to fetch accommodations',
-            isLoading: false
+            isLoading: false,
           });
           return {};
         }
