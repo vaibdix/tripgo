@@ -49,7 +49,7 @@ const About = () => {
         </Typography>
 
         <Typography variant="body1" sx={{ mb: 4, maxWidth: '800px' }}>
-          Since 2020, TripGo has been dedicated to providing memorable and sustainable travel
+          Since 2020, Saffron Stays has been dedicated to providing memorable and sustainable travel
           experiences. With years of expertise, we've grown to become your trusted partner in
           creating unforgettable journeys that respect both our travelers and our destinations.
         </Typography>

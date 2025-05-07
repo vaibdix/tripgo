@@ -107,7 +107,7 @@ function Header() {
 							alt="logo"
 							style={{ width: "20px", height: "20px" }}
 						/>
-						TripGo
+						Saffron Stays
 					</Typography>
 				</Link>
 

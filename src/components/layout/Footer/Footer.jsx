@@ -68,8 +68,8 @@ function Footer() {
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <Typography variant="body2">+91 987654321</Typography>
-                  <Typography variant="body2">Info@tripgo.com</Typography>
-                  <Typography variant="body2">support@tripgo.com</Typography>
+                  <Typography variant="body2">Info@SaffronStays.com</Typography>
+                  <Typography variant="body2">support@SaffronStays.com</Typography>
                 </Box>
               </Box>
             </Box>
@@ -85,7 +85,7 @@ function Footer() {
           >
             <img
               src={tripgoLogo}
-              alt="TripGo Large"
+              alt="Saffron Stays"
               style={{
                 height: 'auto',
                 maxWidth: '100%',

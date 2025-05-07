@@ -281,7 +281,7 @@ const Contact = () => {
               Speak to our friendly team.
             </Typography>
             <Typography variant="body2" sx={{ color: 'white' }}>
-              sales@tripgo.com
+              sales@SaffronStays.com
             </Typography>
           </Box>
 
@@ -378,7 +378,7 @@ const Contact = () => {
               Start your 30-day free trial
             </Typography>
             <Typography variant="body1" sx={{ color: 'grey.500' }}>
-              Join over 4,000+ startups already growing with TripGo.
+              Join over 4,000+ startups already growing with Saffron Stays.
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
